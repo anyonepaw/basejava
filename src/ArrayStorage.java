@@ -23,13 +23,6 @@ import java.util.Arrays;
  */
 
 
-/**
- * 1) по заданию
- * Посмотрите на класс java.util.Arrays. В нем есть полезные методы, которые помогут
- * вам написать более простой и понятный код
- * для методя clear() и getAll()
- */
-
 public class ArrayStorage {
 
     private int size = 0;
@@ -81,10 +74,6 @@ public class ArrayStorage {
 
     }
 
-
-    //Посмотрите на класс java.util.Arrays. В нем есть полезные методы, которые помогут
-    //вам написать более простой и понятный код
-    //для методя clear() и getAll()
 
     /**
      * @return array, contains only Resumes in storage (without null)

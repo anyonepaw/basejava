@@ -3,6 +3,8 @@
  */
 
 
+import java.util.Arrays;
+
 /**
  * Реализуйте класс ArrayStorage, организовав хранение резюме на основе массива
  * с методами save, get, delete, size, clear, getAll
@@ -21,9 +23,17 @@
  */
 
 
+/**
+ * 1) по заданию
+ * Посмотрите на класс java.util.Arrays. В нем есть полезные методы, которые помогут
+ * вам написать более простой и понятный код
+ * для методя clear() и getAll()
+ */
+
 public class ArrayStorage {
 
     private int size = 0;
+    private int idx;
     Resume[] storage = new Resume[10000];
 
 
@@ -35,13 +45,10 @@ public class ArrayStorage {
 
     void save(Resume r) {
 
-        if (size == storage.length) {
-            size--;
-            throw new IndexOutOfBoundsException();
+        if (size < storage.length) {
+            storage[size] = r;
+            size++;
         }
-
-        storage[size] = r;
-        size++;
 
     }
 
@@ -50,28 +57,35 @@ public class ArrayStorage {
 
         if (uuid != null) {
             for (int i = 0; i < size; i++) {
-                if (uuid.equals(storage[i].uuid))
+                if (uuid.equals(storage[i].uuid)) {
+                    idx = i;
                     return storage[i];
+
+                }
+
             }
         }
         return null;
 
     }
 
+
+
     void delete(String uuid) {
 
-        int index;
-
-        for (int i = 0; i < size; i++) {
-            if (uuid.equals(storage[i].uuid)) {
-                index = i;
-                System.arraycopy(storage, index + 1, storage, index, size - index);
-            }
-        }
+        idx = 0;
+        get(uuid);
+        storage[idx] = storage[size-1];
+        storage[size-1] = null;
 
         size--;
 
     }
+
+
+    //Посмотрите на класс java.util.Arrays. В нем есть полезные методы, которые помогут
+    //вам написать более простой и понятный код
+    //для методя clear() и getAll()
 
     /**
      * @return array, contains only Resumes in storage (without null)

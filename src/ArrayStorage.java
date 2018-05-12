@@ -34,11 +34,11 @@ public class ArrayStorage {
 
     private int size = 0;
     private int idx;
-    Resume[] storage = new Resume[10000];
+    private Resume[] storage = new Resume[10000];
 
 
     void clear() {
-        storage = new Resume[10000];
+        Arrays.fill(storage, null);
         size = 0;
     }
 
@@ -70,13 +70,12 @@ public class ArrayStorage {
     }
 
 
-
     void delete(String uuid) {
 
         idx = 0;
         get(uuid);
-        storage[idx] = storage[size-1];
-        storage[size-1] = null;
+        storage[idx] = storage[size - 1];
+        storage[size - 1] = null;
 
         size--;
 
@@ -91,9 +90,7 @@ public class ArrayStorage {
      * @return array, contains only Resumes in storage (without null)
      */
     Resume[] getAll() {
-        Resume newArray[] = new Resume[size];
-        System.arraycopy(storage, 0, newArray, 0, size);
-        return newArray;
+        return Arrays.copyOf(storage, size);
     }
 
     int size() {

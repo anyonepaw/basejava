@@ -2,33 +2,14 @@
  * Array based storage for Resumes
  */
 
-
 import java.util.Arrays;
-
-/**
- * Реализуйте класс ArrayStorage, организовав хранение резюме на основе массива
- * с методами save, get, delete, size, clear, getAll
- * <p>
- * При этом храните все резюме в начале storage (без дырок в виде null), чтобы не
- * перебирать каждый раз все 10000 элементов
- * <p>
- * Схема хранения резюме в storage (от 0 до size - 1 элементов null нет):
- * r1, r2, r3,..., rn, null, null,..., null
- * <----- size ----->
- * <------- storage.length (10000) ------->
- * <p>
- * Посмотрите на класс java.util.Arrays. В нем есть полезные методы, которые помогут
- * вам написать более простой и понятный код
- * Протестируйте вашу реализацию с помощью классов MainArray.main() и MainTestArrayStorage.main()
- */
 
 
 public class ArrayStorage {
 
-    private int size = 0;
 
     private Resume[] storage = new Resume[10000];
-
+    private int size = 0;
 
     void clear() {
 
@@ -37,8 +18,33 @@ public class ArrayStorage {
 
     }
 
+    void update(Resume r) {
+
+        if (!resumeIsPresent(r.uuid)) {
+            System.out.println("Resume is not present. Cannot update.");
+            return;
+        }
+
+        for (int i = 0; i < size; i++) {
+            if (r.uuid.equals(storage[i].uuid)) {
+                r = new Resume();
+            }
+        }
+
+    }
+
 
     void save(Resume r) {
+
+        if (resumeIsPresent(r.uuid)) {
+            System.out.println("Resume is present in storage already.");
+            return;
+        }
+
+        if (size == storage.length) {
+            System.out.println("Storage is full.");
+            return;
+        }
 
         if (size < storage.length) {
             storage[size] = r;
@@ -66,6 +72,11 @@ public class ArrayStorage {
 
     void delete(String uuid) {
 
+        if (!resumeIsPresent(uuid)) {
+            System.out.println("Resume is not present. Cannot delete.");
+            return;
+        }
+
         for (int i = 0; i < size; i++) {
             if (uuid.equals(storage[i].uuid)) {
                 storage[i] = storage[size - 1];
@@ -90,6 +101,17 @@ public class ArrayStorage {
     int size() {
 
         return size;
+
+    }
+
+    private boolean resumeIsPresent(String uuid) {
+
+        for (int i = 0; i < size; i++) {
+            if (uuid.equals(storage[i].uuid)) {
+                return true;
+            }
+        }
+        return false;
 
     }
 

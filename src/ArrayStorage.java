@@ -20,15 +20,19 @@ public class ArrayStorage {
 
     protected void update(Resume resume) {
 
-        int i = resumeIsPresent(resume.uuid);
-        if (i != -1) storage[i] = new Resume();
+        int i = findAndCheckIfPresent(resume.uuid);
+        if (i != -1) {
+            storage[i] = new Resume();
+        } else {
+            System.out.println("Resume on " + resume.uuid + " is not present.");
+        }
 
     }
 
 
     protected void save(Resume resume) {
 
-        if (resumeIsPresent(resume.uuid) >= 0) {
+        if (findAndCheckIfPresent(resume.uuid) >= 0) {
             System.out.println("Resume is present in storage already.");
             return;
         }
@@ -46,22 +50,26 @@ public class ArrayStorage {
 
     protected Resume get(String uuid) {
 
-        if (uuid != null) {
-            int i = resumeIsPresent(uuid);
-            if (i != -1) return storage[i];
+        int i = findAndCheckIfPresent(uuid);
+        if (i != -1) {
+            return storage[i];
+        } else{
+            System.out.println("Resume on " + uuid + " is not present.");
+            return null;
         }
-        return null;
 
     }
 
 
     protected void delete(String uuid) {
 
-        int i = resumeIsPresent(uuid);
+        int i = findAndCheckIfPresent(uuid);
         if (i != -1) {
-            storage[i] = storage[size - 1];
-            storage[size - 1] = null;
             size--;
+            storage[i] = storage[size];
+            storage[size] = null;
+        } else {
+            System.out.println("Resume on " + uuid + " is not present.");
         }
 
     }
@@ -83,14 +91,15 @@ public class ArrayStorage {
     }
 
 
-    private int resumeIsPresent(String uuid) {
+    private int findAndCheckIfPresent(String uuid) {
 
-        for (int i = 0; i < size; i++) {
-            if (uuid.equals(storage[i].uuid)) {
-                return i;
+        if (uuid != null) {
+            for (int i = 0; i < size; i++) {
+                if (uuid.equals(storage[i].uuid)) {
+                    return i;
+                }
             }
         }
-        System.out.println("Resume is not present.");
         return -1;
 
     }

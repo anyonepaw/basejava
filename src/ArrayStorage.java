@@ -24,6 +24,7 @@ public class ArrayStorage {
 	protected void update(Resume resume) {
 
 		int numberOfResume = findAndCheckIfPresent(resume.uuid);
+
 		if (numberOfResume >= 0) {
 			storage[numberOfResume] = resume;
 		} else {
@@ -35,8 +36,9 @@ public class ArrayStorage {
 
 	protected void save(Resume resume) {
 
-		requireNonNull(resume.uuid);
 		int numberOfResume = findAndCheckIfPresent(resume.uuid);
+
+		requireNonNull(resume.uuid);
 		if (numberOfResume >= 0) {
 			System.out.println("Resume is present in storage already.");
 			return;
@@ -56,6 +58,7 @@ public class ArrayStorage {
 	protected Resume get(String uuid) {
 
 		int numberOfResume = findAndCheckIfPresent(uuid);
+
 		if (numberOfResume >= 0) {
 			return storage[numberOfResume];
 		}
@@ -68,6 +71,7 @@ public class ArrayStorage {
 	protected void delete(String uuid) {
 
 		int numberOfResume = findAndCheckIfPresent(uuid);
+
 		if (numberOfResume >= 0) {
 			size--;
 			storage[numberOfResume] = storage[size];

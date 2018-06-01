@@ -20,20 +20,25 @@ public class ArrayStorage {
 
     protected void update(Resume resume) {
 
-        int i = findAndCheckIfPresent(resume.uuid);
-        if (i != -1) {
-            storage[i] = new Resume();
+        int numberOfResume = findAndCheckIfPresent(resume.uuid);
+        if (numberOfResume >= 0) {
+            storage[numberOfResume] = resume;
         } else {
-            System.out.println("Resume on " + resume.uuid + " is not present.");
+            System.out.println("Resume " + resume.uuid + " is not present.");
         }
-
     }
 
 
     protected void save(Resume resume) {
 
-        if (findAndCheckIfPresent(resume.uuid) >= 0) {
+        int numberOfResume = findAndCheckIfPresent(resume.uuid);
+
+        if (numberOfResume >= 0) {
             System.out.println("Resume is present in storage already.");
+            return;
+        }
+        if (numberOfResume == -2) {
+            System.out.println("You try to save empty resume.");
             return;
         }
         if (size == storage.length) {
@@ -50,28 +55,27 @@ public class ArrayStorage {
 
     protected Resume get(String uuid) {
 
-        int i = findAndCheckIfPresent(uuid);
-        if (i != -1) {
-            return storage[i];
-        } else{
-            System.out.println("Resume on " + uuid + " is not present.");
-            return null;
+        int numberOfResume = findAndCheckIfPresent(uuid);
+        if (numberOfResume >= 0) {
+            return storage[numberOfResume];
+        } else {
+            System.out.println("Resume " + uuid + " is not present.");
         }
+        return null;
 
     }
 
 
     protected void delete(String uuid) {
 
-        int i = findAndCheckIfPresent(uuid);
-        if (i != -1) {
+        int numberOfResume = findAndCheckIfPresent(uuid);
+        if (numberOfResume >= 0) {
             size--;
-            storage[i] = storage[size];
+            storage[numberOfResume] = storage[size];
             storage[size] = null;
         } else {
-            System.out.println("Resume on " + uuid + " is not present.");
+            System.out.println("Resume " + uuid + " is not present.");
         }
-
     }
 
 
@@ -99,8 +103,9 @@ public class ArrayStorage {
                     return i;
                 }
             }
+            return -1;
         }
-        return -1;
+        return -2;
 
     }
 

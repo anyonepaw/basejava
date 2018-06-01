@@ -1,14 +1,11 @@
 /**
  * Array based storage for Resumes
  */
-
-import java.util.Arrays;
-
-
-import static java.util.Objects.*;
+import java.util.*;
 
 
 public class ArrayStorage {
+
 
 	private Resume[] storage = new Resume[10000];
 	private int size = 0;
@@ -20,6 +17,7 @@ public class ArrayStorage {
 		size = 0;
 
 	}
+
 
 	protected void update(Resume resume) {
 
@@ -38,7 +36,6 @@ public class ArrayStorage {
 
 		int numberOfResume = findAndCheckIfPresent(resume.uuid);
 
-		requireNonNull(resume.uuid);
 		if (numberOfResume >= 0) {
 			System.out.println("Resume is present in storage already.");
 			return;
@@ -92,6 +89,7 @@ public class ArrayStorage {
 
 	}
 
+
 	protected int size() {
 
 		return size;
@@ -101,11 +99,10 @@ public class ArrayStorage {
 
 	private int findAndCheckIfPresent(String uuid) {
 
-		if (uuid != null) {
-			for (int i = 0; i < size; i++) {
-				if (uuid.equals(storage[i].uuid)) {
-					return i;
-				}
+		Objects.requireNonNull(uuid, "You have typed an empty uuid!");
+		for (int i = 0; i < size; i++) {
+			if (uuid.equals(storage[i].uuid)) {
+				return i;
 			}
 		}
 		return -1;

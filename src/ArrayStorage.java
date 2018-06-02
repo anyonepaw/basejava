@@ -5,12 +5,7 @@
 import java.util.*;
 
 
-public class ArrayStorage implements Storage {
-
-
-	private static final int STORAGE_LIMIT = 10000;
-	private Resume[] storage = new Resume[STORAGE_LIMIT];
-	private int size = 0;
+public class ArrayStorage extends AbstractArrayStorage{
 
 
 	public void clear() {
@@ -54,19 +49,6 @@ public class ArrayStorage implements Storage {
 	}
 
 
-	public Resume get(String uuid) {
-
-		int numberOfResume = findAndCheckIfPresent(uuid);
-
-		if (numberOfResume >= 0) {
-			return storage[numberOfResume];
-		}
-		System.out.println("Resume with uuid = " + uuid + " is not present.");
-		return null;
-
-	}
-
-
 	public void delete(String uuid) {
 
 		int numberOfResume = findAndCheckIfPresent(uuid);
@@ -92,14 +74,7 @@ public class ArrayStorage implements Storage {
 	}
 
 
-	public int size() {
-
-		return size;
-
-	}
-
-
-	private int findAndCheckIfPresent(String uuid) {
+	protected int findAndCheckIfPresent(String uuid) {
 
 		Objects.requireNonNull(uuid, "You have typed an empty uuid!");
 		for (int i = 0; i < size; i++) {

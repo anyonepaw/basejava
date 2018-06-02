@@ -1,17 +1,19 @@
 /**
  * Array based storage for Resumes
  */
+
 import java.util.*;
 
 
-public class ArrayStorage {
+public class ArrayStorage implements Storage {
 
 
-	private Resume[] storage = new Resume[10000];
+	private static final int STORAGE_LIMIT = 10000;
+	private Resume[] storage = new Resume[STORAGE_LIMIT];
 	private int size = 0;
 
 
-	protected void clear() {
+	public void clear() {
 
 		Arrays.fill(storage, 0, size, null);
 		size = 0;
@@ -19,7 +21,7 @@ public class ArrayStorage {
 	}
 
 
-	protected void update(Resume resume) {
+	public void update(Resume resume) {
 
 		int numberOfResume = findAndCheckIfPresent(resume.uuid);
 
@@ -32,7 +34,7 @@ public class ArrayStorage {
 	}
 
 
-	protected void save(Resume resume) {
+	public void save(Resume resume) {
 
 		int numberOfResume = findAndCheckIfPresent(resume.uuid);
 
@@ -40,11 +42,11 @@ public class ArrayStorage {
 			System.out.println("Resume is present in storage already.");
 			return;
 		}
-		if (size == storage.length) {
+		if (size == STORAGE_LIMIT) {
 			System.out.println("Storage is full.");
 			return;
 		}
-		if (size < storage.length) {
+		if (size < STORAGE_LIMIT) {
 			storage[size] = resume;
 			size++;
 		}
@@ -52,7 +54,7 @@ public class ArrayStorage {
 	}
 
 
-	protected Resume get(String uuid) {
+	public Resume get(String uuid) {
 
 		int numberOfResume = findAndCheckIfPresent(uuid);
 
@@ -65,7 +67,7 @@ public class ArrayStorage {
 	}
 
 
-	protected void delete(String uuid) {
+	public void delete(String uuid) {
 
 		int numberOfResume = findAndCheckIfPresent(uuid);
 
@@ -83,14 +85,14 @@ public class ArrayStorage {
 	/**
 	 * @return array, contains only Resumes in storage (without null)
 	 */
-	Resume[] getAll() {
+	public Resume[] getAll() {
 
 		return Arrays.copyOf(storage, size);
 
 	}
 
 
-	protected int size() {
+	public int size() {
 
 		return size;
 

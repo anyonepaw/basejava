@@ -1,12 +1,20 @@
+package ru.javawebinar.basejava.model;
+
 /**
- * com.urise.webapp.model.Resume class
+ * com.urise.webapp.ru.javawebinar.basejava.model.ru.javawebinar.basejava.model.Resume class
  */
 public class Resume implements Comparable<Resume> {
 
-
 	// Unique identifier
-	protected String uuid;
+	private String uuid;
 
+	public String getUuid() {
+		return uuid;
+	}
+
+	public void setUuid(String uuid) {
+		this.uuid = uuid;
+	}
 
 	@Override
 	public boolean equals(Object o) {
@@ -18,20 +26,9 @@ public class Resume implements Comparable<Resume> {
 		return uuid.equals(resume.uuid);
 	}
 
-
 	@Override
 	public int hashCode() {
 		return uuid.hashCode();
-	}
-
-
-	public String getUuid() {
-		return uuid;
-	}
-
-
-	public void setUuid(String uuid) {
-		this.uuid = uuid;
 	}
 
 
@@ -39,7 +36,6 @@ public class Resume implements Comparable<Resume> {
 	public String toString() {
 		return uuid;
 	}
-
 
 	@Override
 	public int compareTo(Resume resume) {

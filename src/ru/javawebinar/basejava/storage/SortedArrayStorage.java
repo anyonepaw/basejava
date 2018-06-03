@@ -1,13 +1,12 @@
-import java.util.Arrays;
+package ru.javawebinar.basejava.storage;
 
+import ru.javawebinar.basejava.model.Resume;
+import java.util.Arrays;
 
 public class SortedArrayStorage extends AbstractArrayStorage {
 
-
 	public void save(Resume resume) {
-
-		int numberOfResume = findAndCheckIfPresent(resume.uuid);
-
+		int numberOfResume = findAndCheckIfPresent(resume.getUuid());
 		if (numberOfResume >= 0) {
 			System.out.println("Resume is present in storage already.");
 			return;
@@ -23,32 +22,23 @@ public class SortedArrayStorage extends AbstractArrayStorage {
 		} else {
 			storage[size++] = resume;
 		}
-
 	}
 
-
 	public void delete(String uuid) {
-
 		int numberOfResume = findAndCheckIfPresent(uuid);
-
 		if (numberOfResume >= 0) {
-			System.arraycopy(storage, numberOfResume+1, storage, numberOfResume, size-1);
+			System.arraycopy(storage, numberOfResume + 1, storage, numberOfResume, size - 1);
 			storage[size--] = null;
 		} else {
 			System.out.println("Resume with uuid = " + uuid + " is not present.");
 		}
-
 	}
-
 
 	@Override
 	protected int findAndCheckIfPresent(String uuid) {
-
 		Resume keyOfSearch = new Resume();
-		keyOfSearch.uuid = uuid;
+		keyOfSearch.setUuid(uuid);
 		//уже делает rangeCheck
 		return Arrays.binarySearch(storage, 0, size, keyOfSearch);
-
 	}
-
 }

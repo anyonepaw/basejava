@@ -1,4 +1,4 @@
-
+import java.util.Arrays;
 
 public abstract class AbstractArrayStorage implements Storage {
 
@@ -8,9 +8,23 @@ public abstract class AbstractArrayStorage implements Storage {
 	protected int size = 0;
 
 
-	public int size() {
+	public void clear() {
 
-		return size;
+		Arrays.fill(storage, 0, size, null);
+		size = 0;
+
+	}
+
+
+	public void update(Resume resume) {
+
+		int numberOfResume = findAndCheckIfPresent(resume.uuid);
+
+		if (numberOfResume >= 0) {
+			storage[numberOfResume] = resume;
+		} else {
+			System.out.println("Resume with uuid = " + resume.uuid + " is not present.");
+		}
 
 	}
 
@@ -24,6 +38,23 @@ public abstract class AbstractArrayStorage implements Storage {
 		}
 		System.out.println("Resume with uuid = " + uuid + " is not present.");
 		return null;
+
+	}
+
+
+	/**
+	 * @return array, contains only Resumes in storage (without null)
+	 */
+	public Resume[] getAll() {
+
+		return Arrays.copyOf(storage, size);
+
+	}
+
+
+	public int size() {
+
+		return size;
 
 	}
 

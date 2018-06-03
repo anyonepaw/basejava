@@ -5,28 +5,7 @@
 import java.util.*;
 
 
-public class ArrayStorage extends AbstractArrayStorage{
-
-
-	public void clear() {
-
-		Arrays.fill(storage, 0, size, null);
-		size = 0;
-
-	}
-
-
-	public void update(Resume resume) {
-
-		int numberOfResume = findAndCheckIfPresent(resume.uuid);
-
-		if (numberOfResume >= 0) {
-			storage[numberOfResume] = resume;
-		} else {
-			System.out.println("Resume with uuid = " + resume.uuid + " is not present.");
-		}
-
-	}
+public class ArrayStorage extends AbstractArrayStorage {
 
 
 	public void save(Resume resume) {
@@ -60,16 +39,6 @@ public class ArrayStorage extends AbstractArrayStorage{
 		} else {
 			System.out.println("Resume with uuid = " + uuid + " is not present.");
 		}
-
-	}
-
-
-	/**
-	 * @return array, contains only Resumes in storage (without null)
-	 */
-	public Resume[] getAll() {
-
-		return Arrays.copyOf(storage, size);
 
 	}
 

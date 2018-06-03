@@ -56,8 +56,6 @@ public abstract class AbstractArrayStorage implements Storage {
 		return null;
 	}
 
-
-
 	/**
 	 * @return array, contains only Resumes in storage (without null)
 	 */

@@ -5,7 +5,6 @@ import java.util.Arrays;
 
 public class SortedArrayStorage extends AbstractArrayStorage {
 
-
 	@Override
 	public void differentPartOfSave(Resume resume) {
 		if (size == 0) {
@@ -21,7 +20,6 @@ public class SortedArrayStorage extends AbstractArrayStorage {
 		}
 	}
 
-
 	@Override
 	public void differentPartOfDelete(String uuid, int numberOfResume) {
 		System.arraycopy(storage, numberOfResume + 1, storage, numberOfResume, size - 1);
@@ -35,4 +33,5 @@ public class SortedArrayStorage extends AbstractArrayStorage {
 		//уже делает rangeCheck
 		return Arrays.binarySearch(storage, 0, size, keyOfSearch);
 	}
+
 }

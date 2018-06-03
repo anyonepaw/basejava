@@ -5,12 +5,9 @@ import java.util.Arrays;
 
 public class SortedArrayStorage extends AbstractArrayStorage {
 
-	public void save(Resume resume) {
-		int numberOfResume = findAndCheckIfPresent(resume.getUuid());
-		if (numberOfResume >= 0) {
-			System.out.println("Resume is present in storage already.");
-			return;
-		}
+
+	@Override
+	public void differentPartOfSave(Resume resume) {
 		if (size == 0) {
 			storage[size++] = resume;
 			return;
@@ -24,14 +21,11 @@ public class SortedArrayStorage extends AbstractArrayStorage {
 		}
 	}
 
-	public void delete(String uuid) {
-		int numberOfResume = findAndCheckIfPresent(uuid);
-		if (numberOfResume >= 0) {
-			System.arraycopy(storage, numberOfResume + 1, storage, numberOfResume, size - 1);
-			storage[size--] = null;
-		} else {
-			System.out.println("Resume with uuid = " + uuid + " is not present.");
-		}
+
+	@Override
+	public void differentPartOfDelete(String uuid, int numberOfResume) {
+		System.arraycopy(storage, numberOfResume + 1, storage, numberOfResume, size - 1);
+		storage[size--] = null;
 	}
 
 	@Override

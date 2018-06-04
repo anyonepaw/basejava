@@ -13,14 +13,8 @@ public class ArrayStorage extends AbstractArrayStorage {
 
 	@Override
 	public void doSave(Resume resume) {
-		if (size == AbstractArrayStorage.STORAGE_LIMIT) {
-			System.out.println("Storage is full.");
-			return;
-		}
-		if (size < AbstractArrayStorage.STORAGE_LIMIT) {
 			storage[size] = resume;
 			size++;
-		}
 	}
 
 	@Override

@@ -25,6 +25,10 @@ public abstract class AbstractArrayStorage implements Storage {
 	}
 
 	public void save(Resume resume) {
+		if (size == STORAGE_LIMIT) {
+			System.out.println("Storage is full.");
+			return;
+		}
 		int numberOfResume = findAndCheckIfPresent(resume.getUuid());
 		if (numberOfResume >= 0) {
 			System.out.println("Resume is present in storage already.");

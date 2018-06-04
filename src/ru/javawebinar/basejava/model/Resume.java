@@ -40,8 +40,5 @@ public class Resume implements Comparable<Resume> {
 	@Override
 	public int compareTo(Resume resume) {
 		return uuid.compareTo(resume.uuid);
-//		int numberOfResume = Integer.parseInt(this.uuid.substring(4,5));
-//		int numberOfCompareResume = Integer.parseInt(o.uuid.substring(4,5));
-//		return numberOfResume - numberOfCompareResume;
 	}
 }

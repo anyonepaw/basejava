@@ -24,28 +24,24 @@ public abstract class AbstractArrayStorage implements Storage {
 		}
 	}
 
-	public void save(Resume resume){
+	public void save(Resume resume) {
 		int numberOfResume = findAndCheckIfPresent(resume.getUuid());
 		if (numberOfResume >= 0) {
 			System.out.println("Resume is present in storage already.");
 			return;
 		}
-		differentPartOfSave(resume);
+		doSave(resume);
 	}
 
-	public abstract void differentPartOfSave(Resume resume);
-
-
-	public void delete(String uuid){
+	public void delete(String uuid) {
 		int numberOfResume = findAndCheckIfPresent(uuid);
 		if (numberOfResume >= 0) {
-			differentPartOfDelete(uuid, numberOfResume);
+			doDelete(uuid, numberOfResume);
+			storage[--size] = null;
 		} else {
 			System.out.println("Resume with uuid = " + uuid + " is not present.");
 		}
 	}
-
-	public abstract void differentPartOfDelete(String uuid, int numberOfResume);
 
 	public Resume get(String uuid) {
 		int numberOfResume = findAndCheckIfPresent(uuid);
@@ -68,5 +64,9 @@ public abstract class AbstractArrayStorage implements Storage {
 	}
 
 	protected abstract int findAndCheckIfPresent(String uuid);
+
+	public abstract void doSave(Resume resume);
+
+	public abstract void doDelete(String uuid, int numberOfResume);
 
 }

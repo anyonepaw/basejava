@@ -1,12 +1,13 @@
 package ru.javawebinar.basejava.storage;
 
 import ru.javawebinar.basejava.model.Resume;
+
 import java.util.Arrays;
 
 public class SortedArrayStorage extends AbstractArrayStorage {
 
 	@Override
-	public void differentPartOfSave(Resume resume) {
+	public void doSave(Resume resume) {
 		if (size == 0) {
 			storage[size++] = resume;
 			return;
@@ -21,9 +22,10 @@ public class SortedArrayStorage extends AbstractArrayStorage {
 	}
 
 	@Override
-	public void differentPartOfDelete(String uuid, int numberOfResume) {
-		System.arraycopy(storage, numberOfResume + 1, storage, numberOfResume, size - 1);
-		storage[size--] = null;
+	public void doDelete(String uuid, int numberOfResume) {
+		for (int i = numberOfResume; i < size; i++) {
+			storage[i] = storage[i + 1];
+		}
 	}
 
 	@Override

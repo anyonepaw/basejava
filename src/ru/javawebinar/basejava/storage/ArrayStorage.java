@@ -5,13 +5,14 @@ package ru.javawebinar.basejava.storage;
  */
 
 import ru.javawebinar.basejava.model.Resume;
+
 import java.util.*;
 
 
 public class ArrayStorage extends AbstractArrayStorage {
 
 	@Override
-	public void differentPartOfSave(Resume resume) {
+	public void doSave(Resume resume) {
 		if (size == AbstractArrayStorage.STORAGE_LIMIT) {
 			System.out.println("Storage is full.");
 			return;
@@ -23,10 +24,8 @@ public class ArrayStorage extends AbstractArrayStorage {
 	}
 
 	@Override
-	public void differentPartOfDelete(String uuid, int numberOfResume) {
-		size--;
-		storage[numberOfResume] = storage[size];
-		storage[size] = null;
+	public void doDelete(String uuid, int numberOfResume) {
+		storage[numberOfResume] = storage[size - 1];
 	}
 
 	protected int findAndCheckIfPresent(String uuid) {

@@ -34,7 +34,8 @@ public abstract class AbstractArrayStorage implements Storage {
 			System.out.println("Resume is present in storage already.");
 			return;
 		}
-		doSave(resume);
+		doSave(resume, numberOfResume);
+		size++;
 
 	}
 
@@ -70,7 +71,7 @@ public abstract class AbstractArrayStorage implements Storage {
 
 	protected abstract int findAndCheckIfPresent(String uuid);
 
-	public abstract void doSave(Resume resume);
+	public abstract void doSave(Resume resume, int numberOfResume);
 
 	public abstract void doDelete(String uuid, int numberOfResume);
 

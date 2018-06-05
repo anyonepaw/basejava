@@ -2,18 +2,15 @@ package ru.javawebinar.basejava.storage;
 
 import ru.javawebinar.basejava.model.Resume;
 
-import java.util.Arrays;
-
 import static java.util.Arrays.binarySearch;
 
 public class SortedArrayStorage extends AbstractArrayStorage {
 
 	@Override
-	public void doSave(Resume resume) {
-		storage[size] = resume;
-		size++;
-		binaryInsertionSort();
-
+	public void doSave(Resume resume, int numberOfResume) {
+		int indexOfResume = Math.abs(numberOfResume + 1);
+		System.arraycopy(storage, indexOfResume, storage, indexOfResume + 1, size);
+		storage[indexOfResume] = resume;
 	}
 
 	@Override
@@ -26,18 +23,6 @@ public class SortedArrayStorage extends AbstractArrayStorage {
 		Resume keyOfSearch = new Resume();
 		keyOfSearch.setUuid(uuid);
 		return binarySearch(storage, 0, size, keyOfSearch);
-	}
-
-	public void binaryInsertionSort() {
-		for (int i = 1; i < size; i++) {
-			Resume x = storage[i];
-			// Find location to insert using binary search
-			int j = Math.abs(Arrays.binarySearch(storage, 0, i, x) + 1);
-			//Shifting array to one location right
-			System.arraycopy(storage, j, storage, j + 1, i - j);
-			//Placing element at its correct location
-			storage[j] = x;
-		}
 	}
 
 }

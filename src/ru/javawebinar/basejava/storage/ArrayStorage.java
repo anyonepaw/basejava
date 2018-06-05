@@ -10,9 +10,8 @@ import java.util.*;
 public class ArrayStorage extends AbstractArrayStorage {
 
 	@Override
-	public void doSave(Resume resume) {
+	public void doSave(Resume resume, int numberOfResume) {
 		storage[size] = resume;
-		size++;
 	}
 
 	@Override

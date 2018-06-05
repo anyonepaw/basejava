@@ -14,7 +14,6 @@ public class ArrayStorage extends AbstractArrayStorage {
 	@Override
 	public void doSave(Resume resume) {
 			storage[size] = resume;
-			size++;
 	}
 
 	@Override

@@ -5,15 +5,14 @@ package ru.javawebinar.basejava.storage;
  */
 
 import ru.javawebinar.basejava.model.Resume;
-
 import java.util.*;
-
 
 public class ArrayStorage extends AbstractArrayStorage {
 
 	@Override
 	public void doSave(Resume resume) {
-			storage[size] = resume;
+		storage[size] = resume;
+		size++;
 	}
 
 	@Override

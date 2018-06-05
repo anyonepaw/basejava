@@ -1,7 +1,7 @@
 package ru.javawebinar.basejava.model;
 
 /**
- * com.urise.webapp.ru.javawebinar.basejava.model.ru.javawebinar.basejava.model.Resume class
+ * Resume class
  */
 public class Resume implements Comparable<Resume> {
 
@@ -31,7 +31,6 @@ public class Resume implements Comparable<Resume> {
 		return uuid.hashCode();
 	}
 
-
 	@Override
 	public String toString() {
 		return uuid;
@@ -39,6 +38,6 @@ public class Resume implements Comparable<Resume> {
 
 	@Override
 	public int compareTo(Resume resume) {
-		return uuid.compareTo(resume.uuid);
+		return (uuid).compareTo(resume.uuid);
 	}
 }

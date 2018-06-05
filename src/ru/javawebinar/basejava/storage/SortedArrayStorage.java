@@ -10,11 +10,10 @@ public class SortedArrayStorage extends AbstractArrayStorage {
 
 	@Override
 	public void doSave(Resume resume) {
-		if (size < 2) {
-			storage[size + 1] = resume;
-			return;
-		}
-		binaryInsertion(resume);
+		storage[size] = resume;
+		size++;
+		binaryInsertionSort();
+
 	}
 
 	@Override
@@ -29,14 +28,18 @@ public class SortedArrayStorage extends AbstractArrayStorage {
 		return binarySearch(storage, 0, size, keyOfSearch);
 	}
 
-	private void binaryInsertion(Resume resume) {
+	public void binaryInsertionSort() {
 		for (int i = 1; i < size; i++) {
+			Resume x = storage[i];
 			// Find location to insert using binary search
-			int j = Math.abs(Arrays.binarySearch(storage, 0, i, storage[i]) + 1);
+			int j = Math.abs(Arrays.binarySearch(storage, 0, i, x) + 1);
 			//Shifting array to one location right
-			System.arraycopy(storage, j, storage, j + 1, i - (j - 1));
+			System.arraycopy(storage, j, storage, j + 1, i - j);
 			//Placing element at its correct location
-			storage[j] = resume;
+			storage[j] = x;
 		}
 	}
+
 }
+
+

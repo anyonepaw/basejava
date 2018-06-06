@@ -10,12 +10,12 @@ public abstract class AbstractArrayStorage implements Storage {
 	protected Resume[] storage = new Resume[STORAGE_LIMIT];
 	protected int size = 0;
 
-	public void clear() {
+	public final void clear() {
 		Arrays.fill(storage, 0, size, null);
 		size = 0;
 	}
 
-	public void update(Resume resume) {
+	public final void update(Resume resume) {
 		int numberOfResume = findAndCheckIfPresent(resume.getUuid());
 		if (numberOfResume >= 0) {
 			storage[numberOfResume] = resume;
@@ -24,7 +24,7 @@ public abstract class AbstractArrayStorage implements Storage {
 		}
 	}
 
-	public void save(Resume resume) {
+	public final void save(Resume resume) {
 		if (size == STORAGE_LIMIT) {
 			System.out.println("Storage is full.");
 			return;
@@ -36,20 +36,19 @@ public abstract class AbstractArrayStorage implements Storage {
 		}
 		doSave(resume, numberOfResume);
 		size++;
-
 	}
 
-	public void delete(String uuid) {
+	public final void delete(String uuid) {
 		int numberOfResume = findAndCheckIfPresent(uuid);
 		if (numberOfResume >= 0) {
-			doDelete(uuid, numberOfResume);
+			doDelete(numberOfResume);
 			storage[--size] = null;
 		} else {
 			System.out.println("Resume with uuid = " + uuid + " is not present.");
 		}
 	}
 
-	public Resume get(String uuid) {
+	public final Resume get(String uuid) {
 		int numberOfResume = findAndCheckIfPresent(uuid);
 		if (numberOfResume >= 0) {
 			return storage[numberOfResume];
@@ -61,18 +60,18 @@ public abstract class AbstractArrayStorage implements Storage {
 	/**
 	 * @return array, contains only Resumes in storage (without null)
 	 */
-	public Resume[] getAll() {
+	public final Resume[] getAll() {
 		return Arrays.copyOf(storage, size);
 	}
 
-	public int size() {
+	public final int size() {
 		return size;
 	}
 
 	protected abstract int findAndCheckIfPresent(String uuid);
 
-	public abstract void doSave(Resume resume, int numberOfResume);
+	protected abstract void doSave(Resume resume, int numberOfResume);
 
-	public abstract void doDelete(String uuid, int numberOfResume);
+	protected abstract void doDelete(int numberOfResume);
 
 }

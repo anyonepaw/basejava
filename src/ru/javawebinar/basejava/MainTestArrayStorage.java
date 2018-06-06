@@ -13,11 +13,11 @@ public class MainTestArrayStorage {
 
     public static void main(String[] args) {
         final Resume r1 = new Resume();
-        r1.setUuid("auid1");
+        r1.setUuid("uuid1");
         final Resume r2 = new Resume();
         r2.setUuid("uuad2");
         final Resume r3 = new Resume();
-        r3.setUuid("buid3");
+        r3.setUuid("uuid3");
         final Resume r4 = new Resume();
         r4.setUuid("auid4");
 

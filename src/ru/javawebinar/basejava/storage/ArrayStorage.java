@@ -10,12 +10,12 @@ import java.util.*;
 public class ArrayStorage extends AbstractArrayStorage {
 
 	@Override
-	public void doSave(Resume resume, int numberOfResume) {
+	public void insertElement(Resume resume, int numberOfResume) {
 		storage[size] = resume;
 	}
 
 	@Override
-	public void doDelete(int numberOfResume) {
+	public void fillDeletedElement(int numberOfResume) {
 		storage[numberOfResume] = storage[size - 1];
 	}
 

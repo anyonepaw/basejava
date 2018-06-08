@@ -1,5 +1,8 @@
 package ru.javawebinar.basejava.storage;
 
+import ru.javawebinar.basejava.exception.ExistStorageException;
+import ru.javawebinar.basejava.exception.NotExistStorageException;
+import ru.javawebinar.basejava.exception.StorageException;
 import ru.javawebinar.basejava.model.Resume;
 
 import java.util.Arrays;
@@ -20,31 +23,29 @@ public abstract class AbstractArrayStorage implements Storage {
 		if (numberOfResume >= 0) {
 			storage[numberOfResume] = resume;
 		} else {
-			System.out.println("Resume with uuid = " + resume.getUuid() + " is not present.");
+			throw new NotExistStorageException(resume.getUuid());
 		}
 	}
 
 	public final void save(Resume resume) {
 		if (size == STORAGE_LIMIT) {
-			System.out.println("Storage is full.");
-			return;
+			throw new StorageException("Storage is full.", resume.getUuid());
 		}
 		int numberOfResume = findAndCheckIfPresent(resume.getUuid());
 		if (numberOfResume >= 0) {
-			System.out.println("Resume is present in storage already.");
-			return;
+			throw new ExistStorageException(resume.getUuid());
 		}
-		doSave(resume, numberOfResume);
+		insertElement(resume, numberOfResume);
 		size++;
 	}
 
 	public final void delete(String uuid) {
 		int numberOfResume = findAndCheckIfPresent(uuid);
 		if (numberOfResume >= 0) {
-			doDelete(numberOfResume);
+			fillDeletedElement(numberOfResume);
 			storage[--size] = null;
 		} else {
-			System.out.println("Resume with uuid = " + uuid + " is not present.");
+			throw new NotExistStorageException(uuid);
 		}
 	}
 
@@ -53,8 +54,7 @@ public abstract class AbstractArrayStorage implements Storage {
 		if (numberOfResume >= 0) {
 			return storage[numberOfResume];
 		}
-		System.out.println("Resume with uuid = " + uuid + " is not present.");
-		return null;
+		throw new NotExistStorageException(uuid);
 	}
 
 	/**
@@ -70,8 +70,8 @@ public abstract class AbstractArrayStorage implements Storage {
 
 	protected abstract int findAndCheckIfPresent(String uuid);
 
-	protected abstract void doSave(Resume resume, int numberOfResume);
+	protected abstract void insertElement(Resume resume, int numberOfResume);
 
-	protected abstract void doDelete(int numberOfResume);
+	protected abstract void fillDeletedElement(int numberOfResume);
 
 }

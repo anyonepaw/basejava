@@ -20,7 +20,7 @@ public class ArrayStorageTest extends AbstractArrayStorageTest {
 	}
 
 	@Test
-	public void insertElement() {
+	public void insertElement() throws Exception {
 		arrayStorage.insertElement(RESUME_FOR_CHECKING, arrayStorage.size);
 		arrayStorage.size++;
 		Resume[] resumes = new Resume[]{new Resume(UUID_1),
@@ -29,7 +29,7 @@ public class ArrayStorageTest extends AbstractArrayStorageTest {
 	}
 
 	@Test
-	public void fillDeletedElement() {
+	public void fillDeletedElement() throws Exception{
 		int index = arrayStorage.findAndCheckIfPresent("uuid3");
 		arrayStorage.fillDeletedElement(index);
 		arrayStorage.storage[--arrayStorage.size] = null;
@@ -38,7 +38,7 @@ public class ArrayStorageTest extends AbstractArrayStorageTest {
 	}
 
 	@Test
-	public void findAndCheckIfPresent() {
+	public void findAndCheckIfPresent() throws Exception {
 		Assert.assertEquals(0, arrayStorage.findAndCheckIfPresent("uuid1"));
 	}
 

@@ -10,7 +10,7 @@ public class MainReflection {
 	public static void main(String[] args) throws IllegalAccessException {
 		Resume resume = new Resume();
 		Field field = resume.getClass().getDeclaredFields()[0];
-	 	field.setAccessible(true);
+		field.setAccessible(true);
 		System.out.println(field.getName());
 		System.out.println(field.get(resume));
 		System.out.println(resume.toString());
@@ -20,15 +20,11 @@ public class MainReflection {
 		getMethod(resume);
 	}
 
-	public static void getMethod(Resume resume) {
-		Method method[] = resume.getClass().getMethods();
-		for (Method m: method) {
-			System.out.println(m);
-		}
-		Method toStringOfResume = method[1];
+	public static void getMethod(Resume resume)   {
 		try {
-			System.out.println(toStringOfResume.invoke(resume));
-		} catch (IllegalAccessException | InvocationTargetException e) {
+			Method method = resume.getClass().getMethod("toString");
+			System.out.println(method.invoke(resume));
+		} catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException  e) {
 			e.printStackTrace();
 		}
 

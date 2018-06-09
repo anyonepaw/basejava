@@ -1,30 +1,22 @@
 package ru.javawebinar.basejava.storage;
 
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.*;
 import ru.javawebinar.basejava.model.Resume;
 
 public class ArrayStorageTest extends AbstractArrayStorageTest {
 
-	private static final String UUID_1 = "uuid1";
-	private static final String UUID_2 = "uuid2";
-	private static final String UUID_3 = "uuid3";
-	private static final Resume RESUME_FOR_CHECKING = new Resume("uuid4");
-
-	@Override
-	ArrayStorage getStorage() {
-		return new ArrayStorage();
-	}
-
-	private ArrayStorage arrayStorage = getStorage();
+	private static ArrayStorage arrayStorage = new ArrayStorage();
 
 	@Before
 	public void setUp() throws Exception {
+		arrayStorage.clear();
 		arrayStorage.save(new Resume(UUID_1));
 		arrayStorage.save(new Resume(UUID_2));
 		arrayStorage.save(new Resume(UUID_3));
+	}
+
+	public ArrayStorageTest() {
+		super(arrayStorage);
 	}
 
 	@Test
@@ -46,7 +38,7 @@ public class ArrayStorageTest extends AbstractArrayStorageTest {
 	}
 
 	@Test
-	public void findAndCheckIfPresent(){
+	public void findAndCheckIfPresent() {
 		Assert.assertEquals(0, arrayStorage.findAndCheckIfPresent("uuid1"));
 	}
 

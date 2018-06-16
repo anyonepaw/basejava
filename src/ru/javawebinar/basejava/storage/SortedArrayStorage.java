@@ -7,7 +7,7 @@ import static java.util.Arrays.binarySearch;
 public class SortedArrayStorage extends AbstractArrayStorage {
 
 	@Override
-	public void insertElement(Resume resume, int numberOfResume) {
+	public void insert(Resume resume, int numberOfResume) {
 		int indexOfResume = Math.abs(numberOfResume + 1);
 		System.arraycopy(storage, indexOfResume, storage, indexOfResume + 1, size - indexOfResume);
 		storage[indexOfResume] = resume;
@@ -19,7 +19,7 @@ public class SortedArrayStorage extends AbstractArrayStorage {
 	}
 
 	@Override
-	protected int findAndCheckIfPresent(String uuid) {
+	protected Integer getKey(String uuid) {
 		Resume keyOfSearch = new Resume(uuid);
 		return binarySearch(storage, 0, size, keyOfSearch);
 	}

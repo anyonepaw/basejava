@@ -1,13 +1,11 @@
 package ru.javawebinar.basejava.storage;
 
-import ru.javawebinar.basejava.exception.ExistStorageException;
-import ru.javawebinar.basejava.exception.NotExistStorageException;
 import ru.javawebinar.basejava.exception.StorageException;
 import ru.javawebinar.basejava.model.Resume;
 
 import java.util.Arrays;
 
-public abstract class AbstractArrayStorage implements Storage {
+public abstract class AbstractArrayStorage extends AbstractStorage implements Storage {
 
 	protected static final int STORAGE_LIMIT = 10000;
 	protected Resume[] storage = new Resume[STORAGE_LIMIT];
@@ -18,48 +16,27 @@ public abstract class AbstractArrayStorage implements Storage {
 		size = 0;
 	}
 
-	public final void update(Resume resume) {
-		int numberOfResume = findAndCheckIfPresent(resume.getUuid());
-		if (numberOfResume >= 0) {
-			storage[numberOfResume] = resume;
-		} else {
-			throw new NotExistStorageException(resume.getUuid());
-		}
+	public void doUpdate(Resume resume, Object numberOfResume) {
+		storage[(Integer) numberOfResume] = resume;
 	}
 
-	public final void save(Resume resume) {
+	public void doSave(Resume resume, Object numberOfResume) {
 		if (size == STORAGE_LIMIT) {
 			throw new StorageException("Storage is full.", resume.getUuid());
 		}
-		int numberOfResume = findAndCheckIfPresent(resume.getUuid());
-		if (numberOfResume >= 0) {
-			throw new ExistStorageException(resume.getUuid());
-		}
-		insertElement(resume, numberOfResume);
+		insert(resume, (Integer) numberOfResume);
 		size++;
 	}
 
-	public final void delete(String uuid) {
-		int numberOfResume = findAndCheckIfPresent(uuid);
-		if (numberOfResume >= 0) {
-			fillDeletedElement(numberOfResume);
-			storage[--size] = null;
-		} else {
-			throw new NotExistStorageException(uuid);
-		}
+	public void doDelete(Object numberOfResume) {
+		fillDeletedElement((Integer) numberOfResume);
+		storage[--size] = null;
 	}
 
-	public final Resume get(String uuid) {
-		int numberOfResume = findAndCheckIfPresent(uuid);
-		if (numberOfResume >= 0) {
-			return storage[numberOfResume];
-		}
-		throw new NotExistStorageException(uuid);
+	public Resume doGet(Object numberOfResume) {
+		return storage[(Integer)numberOfResume];
 	}
 
-	/**
-	 * @return array, contains only Resumes in storage (without null)
-	 */
 	public final Resume[] getAll() {
 		return Arrays.copyOf(storage, size);
 	}
@@ -68,10 +45,14 @@ public abstract class AbstractArrayStorage implements Storage {
 		return size;
 	}
 
-	protected abstract int findAndCheckIfPresent(String uuid);
+	protected abstract Integer getKey(String uuid);
 
-	protected abstract void insertElement(Resume resume, int numberOfResume);
+	protected abstract void insert(Resume resume, int numberOfResume);
 
 	protected abstract void fillDeletedElement(int numberOfResume);
 
+	@Override
+	protected boolean contains(Object key) {
+		return (Integer) key >= 0;
+	}
 }

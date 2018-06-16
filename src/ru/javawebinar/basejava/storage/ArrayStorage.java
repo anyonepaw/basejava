@@ -10,7 +10,7 @@ import java.util.*;
 public class ArrayStorage extends AbstractArrayStorage {
 
 	@Override
-	public void insertElement(Resume resume, int numberOfResume) {
+	public void insert(Resume resume, int numberOfResume) {
 		storage[size] = resume;
 	}
 
@@ -19,7 +19,7 @@ public class ArrayStorage extends AbstractArrayStorage {
 		storage[numberOfResume] = storage[size - 1];
 	}
 
-	protected int findAndCheckIfPresent(String uuid) {
+	protected Integer getKey(String uuid) {
 		Objects.requireNonNull(uuid, "You have typed an empty uuid!");
 		for (int i = 0; i < size; i++) {
 			if (uuid.equals(storage[i].getUuid())) {
@@ -28,5 +28,7 @@ public class ArrayStorage extends AbstractArrayStorage {
 		}
 		return -1;
 	}
+
+
 
 }

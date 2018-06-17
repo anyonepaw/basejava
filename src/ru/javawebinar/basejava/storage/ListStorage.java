@@ -16,17 +16,17 @@ public class ListStorage extends AbstractStorage {
 
 	@Override
 	protected void doSave(Resume resume, Object key) {
-		arrayList.add((Integer) key, resume);
+		arrayList.add((int) key, resume);
 	}
 
 	@Override
 	protected Resume doGet(Object key) {
-		return arrayList.get((Integer) key);
+		return arrayList.get((int) key);
 	}
 
 	@Override
 	protected void doUpdate(Resume resume, Object key) {
-		arrayList.add((Integer) key, resume);
+		arrayList.add((int) key, resume);
 	}
 
 	@Override
@@ -46,7 +46,7 @@ public class ListStorage extends AbstractStorage {
 
 	@Override
 	public Resume[] getAll() {
-		return arrayList.toArray(new Resume[arrayList.size()]);
+		return arrayList.toArray(new Resume[0]);
 	}
 
 	@Override

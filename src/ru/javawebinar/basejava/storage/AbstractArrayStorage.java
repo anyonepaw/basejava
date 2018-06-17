@@ -16,25 +16,25 @@ public abstract class AbstractArrayStorage extends AbstractStorage implements St
 		size = 0;
 	}
 
-	public void doUpdate(Resume resume, Object numberOfResume) {
-		storage[(Integer) numberOfResume] = resume;
+	public void doUpdate(Resume resume, Object index) {
+		storage[(int) index] = resume;
 	}
 
-	public void doSave(Resume resume, Object numberOfResume) {
+	public void doSave(Resume resume, Object index) {
 		if (size == STORAGE_LIMIT) {
 			throw new StorageException("Storage is full.", resume.getUuid());
 		}
-		insert(resume, (Integer) numberOfResume);
+		insert(resume, (int) index);
 		size++;
 	}
 
-	public void doDelete(Object numberOfResume) {
-		fillDeletedElement((Integer) numberOfResume);
+	public void doDelete(Object index) {
+		fillDeletedElement((int) index);
 		storage[--size] = null;
 	}
 
-	public Resume doGet(Object numberOfResume) {
-		return storage[(Integer)numberOfResume];
+	public Resume doGet(Object index) {
+		return storage[(int) index];
 	}
 
 	public final Resume[] getAll() {
@@ -47,12 +47,12 @@ public abstract class AbstractArrayStorage extends AbstractStorage implements St
 
 	protected abstract Integer getKey(String uuid);
 
-	protected abstract void insert(Resume resume, int numberOfResume);
+	protected abstract void insert(Resume resume, int index);
 
-	protected abstract void fillDeletedElement(int numberOfResume);
+	protected abstract void fillDeletedElement(int index);
 
 	@Override
-	protected boolean contains(Object key) {
-		return (Integer) key >= 0;
+	protected boolean contains(Object index) {
+		return (Integer) index >= 0;
 	}
 }

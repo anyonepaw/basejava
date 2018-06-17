@@ -7,40 +7,21 @@ import ru.javawebinar.basejava.model.Resume;
 public abstract class AbstractStorage implements Storage {
 
 	public final void update(Resume resume) {
-		Object key = getKey(resume.getUuid());
-		if (contains(key)) {
-			doUpdate(resume, key);
-		} else {
-			throw new NotExistStorageException(resume.getUuid());
-		}
+		doUpdate(resume, ifResumeNotExist(resume.getUuid()));
 	}
 
 	public final void save(Resume resume) {
-		Object key = getKey(resume.getUuid());
-		if (contains(key)) {
-			throw new ExistStorageException(resume.getUuid());
-		} else {
-			doSave(resume, key);
-		}
+		doSave(resume, ifResumeAlreadyExist(resume.getUuid()));
 	}
 
 	public final void delete(String uuid) {
-		Object key = getKey(uuid);
-		if (contains(key)) {
-			doDelete(key);
-		} else {
-			throw new NotExistStorageException(uuid);
-		}
+		doDelete(ifResumeNotExist(uuid));
 	}
+
 
 	public final Resume get(String uuid) {
-		Object key = getKey(uuid);
-		if (contains(key)) {
-			return doGet(key);
-		}
-		throw new NotExistStorageException(uuid);
+		return doGet(ifResumeNotExist(uuid));
 	}
-
 
 	protected abstract boolean contains(Object key);
 
@@ -54,4 +35,21 @@ public abstract class AbstractStorage implements Storage {
 
 	protected abstract Object getKey(String uuid);
 
+	private Object ifResumeNotExist(String uuid) {
+		Object key = getKey(uuid);
+		if (contains(key)) {
+			return key;
+		} else {
+			throw new NotExistStorageException(uuid);
+		}
+	}
+
+	private Object ifResumeAlreadyExist(String uuid) {
+		Object key = getKey(uuid);
+		if (!contains(key)) {
+			return key;
+		} else {
+			throw new ExistStorageException(uuid);
+		}
+	}
 }

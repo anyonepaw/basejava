@@ -16,11 +16,11 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
 		size = 0;
 	}
 
-	public void doUpdate(Resume resume, Object index) {
+	public final void doUpdate(Resume resume, Object index) {
 		storage[(int) index] = resume;
 	}
 
-	public void doSave(Resume resume, Object index) {
+	public final void doSave(Resume resume, Object index) {
 		if (size == STORAGE_LIMIT) {
 			throw new StorageException("Storage is full.", resume.getUuid());
 		}
@@ -28,12 +28,12 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
 		size++;
 	}
 
-	public void doDelete(Object index) {
+	public final void doDelete(Object index) {
 		fillDeletedElement((int) index);
 		storage[--size] = null;
 	}
 
-	public Resume doGet(Object index) {
+	public final Resume doGet(Object index) {
 		return storage[(int) index];
 	}
 
@@ -43,11 +43,6 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
 
 	public final int size() {
 		return size;
-	}
-
-	@Override
-	protected boolean contains(Object index) {
-		return (Integer) index >= 0;
 	}
 
 	protected abstract Integer getKey(String uuid);

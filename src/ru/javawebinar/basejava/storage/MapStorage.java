@@ -10,11 +10,6 @@ public class MapStorage extends AbstractStorage {
 	private Map<String,Resume> map = new TreeMap<>();
 
 	@Override
-	protected boolean contains(Object key) {
-		return false;
-	}
-
-	@Override
 	protected void doSave(Resume resume, Object key) {
 
 	}

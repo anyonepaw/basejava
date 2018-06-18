@@ -10,13 +10,8 @@ public class ListStorage extends AbstractStorage {
 	private List<Resume> arrayList = new ArrayList<>();
 
 	@Override
-	protected boolean contains(Object key) {
-		return arrayList.contains(key);
-	}
-
-	@Override
 	protected void doSave(Resume resume, Object key) {
-		arrayList.add((int) key, resume);
+		arrayList.add(resume);
 	}
 
 	@Override
@@ -26,12 +21,12 @@ public class ListStorage extends AbstractStorage {
 
 	@Override
 	protected void doUpdate(Resume resume, Object key) {
-		arrayList.add((int) key, resume);
+		arrayList.set((int) key, resume);
 	}
 
 	@Override
 	protected void doDelete(Object key) {
-		arrayList.remove(key);
+		arrayList.remove(((int) key));
 	}
 
 	@Override
@@ -41,7 +36,7 @@ public class ListStorage extends AbstractStorage {
 				return i;
 			}
 		}
-		return null;
+		return -1;
 	}
 
 	@Override

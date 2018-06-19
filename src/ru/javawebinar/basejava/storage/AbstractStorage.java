@@ -48,7 +48,7 @@ public abstract class AbstractStorage implements Storage {
 	}
 
 	protected Object getKey(String uuid){
-		return null;
+		return uuid;
 	}
 
 	protected abstract void doSave(Resume resume, Object key);

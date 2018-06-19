@@ -11,7 +11,7 @@ import ru.javawebinar.basejava.model.Resume;
 
 public abstract class AbstractStorageTest {
 
-	private Storage storage;
+	protected Storage storage;
 	private static final String UUID1 = "uuid1";
 	private static final String UUID2 = "uuid2";
 	private static final String UUID3 = "uuid3";

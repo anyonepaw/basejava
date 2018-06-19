@@ -47,9 +47,6 @@ public abstract class AbstractStorage implements Storage {
 		}
 	}
 
-	protected Object getKey(String uuid){
-		return uuid;
-	}
 
 	protected abstract void doSave(Resume resume, Object key);
 
@@ -58,5 +55,7 @@ public abstract class AbstractStorage implements Storage {
 	protected abstract void doUpdate(Resume resume, Object key);
 
 	protected abstract void doDelete(Object key);
+
+	protected abstract Object getKey(String uuid);
 
 }

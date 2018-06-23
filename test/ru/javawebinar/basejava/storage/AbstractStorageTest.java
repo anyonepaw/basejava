@@ -8,14 +8,21 @@ import ru.javawebinar.basejava.exception.ExistStorageException;
 import ru.javawebinar.basejava.exception.NotExistStorageException;
 import ru.javawebinar.basejava.model.Resume;
 
+import java.util.Arrays;
+import java.util.List;
+
 
 public abstract class AbstractStorageTest {
 
 	protected Storage storage;
+
 	private static final String UUID1 = "uuid1";
 	private static final String UUID2 = "uuid2";
 	private static final String UUID3 = "uuid3";
-	private static final String DUMMY = "dummy";
+	private static final String DUMMY = "DUMMY";
+	private static final String FULL_NAME1 = "FULL_NAME1";
+	private static final String FULL_NAME2 = DUMMY + "_NAME2";
+	private static final String FULL_NAME3 = "FULL_NAME3";
 	private static final Resume RESUME_1;
 	private static final Resume RESUME_2;
 	private static final Resume RESUME_3;
@@ -25,9 +32,9 @@ public abstract class AbstractStorageTest {
 	}
 
 	static {
-		RESUME_1 = new Resume(UUID1);
-		RESUME_2 = new Resume(UUID2);
-		RESUME_3 = new Resume(UUID3);
+		RESUME_1 = new Resume(UUID1, FULL_NAME1);
+		RESUME_2 = new Resume(UUID2, FULL_NAME2);
+		RESUME_3 = new Resume(UUID3, FULL_NAME3);
 	}
 
 	@Before
@@ -88,9 +95,9 @@ public abstract class AbstractStorageTest {
 	}
 
 	@Test
-	public void getAll() {
-		Resume[] resumes = new Resume[]{RESUME_1, RESUME_2};
-		assertArrayEquals(resumes, storage.getAll());
+	public void getAllSorted() {
+		List<Resume> resumes = Arrays.asList(RESUME_2, RESUME_1);
+		assertEquals(resumes, storage.getAllSorted());
 	}
 
 	@Test

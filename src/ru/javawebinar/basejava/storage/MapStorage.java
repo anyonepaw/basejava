@@ -2,18 +2,15 @@ package ru.javawebinar.basejava.storage;
 
 import ru.javawebinar.basejava.model.Resume;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class MapStorage extends AbstractStorage {
 
-	private Map<Integer, Resume> map = new HashMap<>();
+	private Map<Resume, Resume> map = new HashMap<>();
 
 	@Override
 	protected void doSave(Resume resume, Object key) {
-			map.put((Integer) key, resume);
+			map.put(resume, resume);
 	}
 
 	@Override
@@ -23,7 +20,7 @@ public class MapStorage extends AbstractStorage {
 
 	@Override
 	protected void doUpdate(Resume resume, Object key) {
-		map.put((Integer) key, resume);
+		map.put((Resume) key, resume);
 	}
 
 	@Override
@@ -33,7 +30,14 @@ public class MapStorage extends AbstractStorage {
 
 	@Override
 	protected Object getKey(String uuid) {
-		return uuid.hashCode();
+
+		for (Resume item : map.keySet()){
+			if(item.getUuid().equals(uuid)){
+				return item;
+			}
+		}
+
+		return null;
 	}
 
 	@Override
@@ -42,10 +46,8 @@ public class MapStorage extends AbstractStorage {
 	}
 
 	@Override
-	public List<Resume> getAllSorted() {
-		List<Resume> sortedList = new ArrayList<>(map.values());
-		sortedList.sort(RESUME_COMPARATOR_BY_FULL_NAME);
-		return sortedList;
+	public List<Resume> getValues() {
+		return new ArrayList<>(map.values());
 	}
 
 	@Override
@@ -57,4 +59,6 @@ public class MapStorage extends AbstractStorage {
 	public int size() {
 		return map.size();
 	}
+
+
 }

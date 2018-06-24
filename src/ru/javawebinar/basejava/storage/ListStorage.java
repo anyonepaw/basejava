@@ -45,8 +45,7 @@ public class ListStorage extends AbstractStorage {
 	}
 
 	@Override
-	public List<Resume> getAllSorted() {
-		arrayList.sort(RESUME_COMPARATOR_BY_FULL_NAME);
+	public List<Resume> getValues() {
 		return arrayList;
 	}
 
@@ -55,5 +54,8 @@ public class ListStorage extends AbstractStorage {
 		return arrayList.size();
 	}
 
-
+	@Override
+	protected boolean contains(Object key) {
+		return (int) key >= 0;
+	}
 }

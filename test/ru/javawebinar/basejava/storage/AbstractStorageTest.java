@@ -13,15 +13,6 @@ import java.util.Arrays;
 import java.util.List;
 
 
-@Suite.SuiteClasses({
-		AbstractArrayStorageTest.class,
-		ArrayStorageTest.class,
-		SortedArrayStorageTest.class,
-		ListStorageTest.class,
-		MapStorageTest.class,
-		MapUuidStorageTest.class
-})
-
 
 public abstract class AbstractStorageTest {
 

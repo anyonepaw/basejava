@@ -7,7 +7,6 @@ import java.util.*;
 public class MapStorage extends AbstractStorage {
 
 	private Map<String, Resume> map = new HashMap<>();
-	private List<String> listOfKeys;
 
 	@Override
 	protected void doSave(Resume resume, Object key) {
@@ -16,23 +15,30 @@ public class MapStorage extends AbstractStorage {
 
 	@Override
 	protected Resume doGet(Object key) {
-		return map.get(listOfKeys.get((int) key));
+		Resume resume = (Resume) key;
+		return map.get(resume.getUuid());
 	}
 
 	@Override
 	protected void doUpdate(Resume resume, Object key) {
-		map.put(listOfKeys.get((int) key), resume);
+		map.put(resume.getUuid(), resume);
 	}
 
 	@Override
 	protected void doDelete(Object key) {
-		map.remove(listOfKeys.get((int) key));
+		Resume resume = (Resume) key;
+		map.remove(resume.getUuid());
 	}
 
 	@Override
 	public Object getSearchKey(String uuid) {
-		listOfKeys = new ArrayList<>(map.keySet());
-		return listOfKeys.contains(uuid) ? listOfKeys.indexOf(uuid) : -1;
+
+		for (Resume resume : map.values()) {
+			if (resume.getUuid().equals(uuid)) {
+				return resume;
+			}
+		}
+		return null;
 	}
 
 	@Override
@@ -47,7 +53,12 @@ public class MapStorage extends AbstractStorage {
 
 	@Override
 	protected boolean contains(Object key) {
-		return (int) key >= 0;
+		if(!(key == null)) {
+			Resume resume = (Resume) key;
+			return map.containsKey(resume.getUuid());
+		}else {
+			return false;
+		}
 	}
 
 	@Override

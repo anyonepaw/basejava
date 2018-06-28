@@ -10,7 +10,9 @@ import java.util.List;
 public abstract class AbstractStorage implements Storage {
 
 	public static final Comparator<Resume> RESUME_COMPARATOR_BY_FULL_NAME =
-			Comparator.comparing(Resume::getFullName);
+			Comparator.comparing(resume -> {
+				return resume.getFullName();
+			});
 
 	public final void update(Resume resume) {
 		String uuid = resume.getUuid();
@@ -31,7 +33,7 @@ public abstract class AbstractStorage implements Storage {
 	}
 
 	private Object checkIfResumeNotExist(String uuid) {
-		Object key = getKey(uuid);
+		Object key = getSearchKey(uuid);
 		if (contains(key)) {
 			return key;
 		} else {
@@ -40,7 +42,7 @@ public abstract class AbstractStorage implements Storage {
 	}
 
 	private Object checkIfResumeAlreadyExist(String uuid) {
-		Object key = getKey(uuid);
+		Object key = getSearchKey(uuid);
 		if (!contains(key)) {
 			return key;
 		} else {
@@ -67,6 +69,6 @@ public abstract class AbstractStorage implements Storage {
 
 	protected abstract void doDelete(Object key);
 
-	protected abstract Object getKey(String uuid);
+	protected abstract Object getSearchKey(String uuid);
 
 }

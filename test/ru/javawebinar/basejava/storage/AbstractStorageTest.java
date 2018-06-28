@@ -4,12 +4,23 @@ import static org.junit.Assert.*;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runners.Suite;
 import ru.javawebinar.basejava.exception.ExistStorageException;
 import ru.javawebinar.basejava.exception.NotExistStorageException;
 import ru.javawebinar.basejava.model.Resume;
 
 import java.util.Arrays;
 import java.util.List;
+
+
+@Suite.SuiteClasses({
+		AbstractArrayStorageTest.class,
+		ArrayStorageTest.class,
+		SortedArrayStorageTest.class,
+		ListStorageTest.class,
+		MapStorageTest.class,
+		MapUuidStorageTest.class
+})
 
 
 public abstract class AbstractStorageTest {
@@ -22,7 +33,7 @@ public abstract class AbstractStorageTest {
 	private static final String DUMMY = "DUMMY";
 	private static final String FULL_NAME1 = "FULL_NAME1";
 	private static final String FULL_NAME2 = DUMMY + "_NAME2";
-	private static final String FULL_NAME3 = "FULL_NAME3";
+	private static final String FULL_NAME3 = "FULL_NAME1";
 	private static final Resume RESUME_1;
 	private static final Resume RESUME_2;
 	private static final Resume RESUME_3;

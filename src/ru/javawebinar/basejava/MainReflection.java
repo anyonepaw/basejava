@@ -5,19 +5,31 @@ import ru.javawebinar.basejava.model.Resume;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.HashMap;
+import java.util.Map;
 
 public class MainReflection {
 	public static void main(String[] args) throws IllegalAccessException {
-		Resume resume = new Resume("dummy_error");
-		Field field = resume.getClass().getDeclaredFields()[0];
-		field.setAccessible(true);
-		System.out.println(field.getName());
-		System.out.println(field.get(resume));
-		System.out.println(resume.toString());
-		field.set(resume, "new_uuid");
-		System.out.println(resume);
+		Map<String, Resume> fakeMap = new HashMap<>();
+//		Resume resume = new Resume("dummy_error");
+//		Field field = resume.getClass().getDeclaredFields()[0];
+//		field.setAccessible(true);
+//		System.out.println(field.getName());
+//		System.out.println(field.get(resume));
+//		System.out.println(resume.toString());
+//		field.set(resume, "new_uuid");
+//		System.out.println(resume);
 
-		getMethod(resume);
+		Method[] methods = fakeMap.getClass().getMethods();
+
+		for (Method m: methods){
+			m.setAccessible(true);
+			System.out.println(m);
+		}
+
+
+
+//		getMethod(resume);
 	}
 
 	public static void getMethod(Resume resume)   {

@@ -15,8 +15,7 @@ public class MapStorage extends AbstractStorage {
 
 	@Override
 	protected Resume doGet(Object key) {
-		Resume resume = (Resume) key;
-		return map.get(resume.getUuid());
+		return (Resume) key;
 	}
 
 	@Override
@@ -32,13 +31,7 @@ public class MapStorage extends AbstractStorage {
 
 	@Override
 	public Object getSearchKey(String uuid) {
-
-		for (Resume resume : map.values()) {
-			if (resume.getUuid().equals(uuid)) {
-				return resume;
-			}
-		}
-		return null;
+		return map.get(uuid);
 	}
 
 	@Override
@@ -53,7 +46,7 @@ public class MapStorage extends AbstractStorage {
 
 	@Override
 	protected boolean contains(Object key) {
-		if(!(key == null)) {
+		if(key != null) {
 			Resume resume = (Resume) key;
 			return map.containsKey(resume.getUuid());
 		}else {

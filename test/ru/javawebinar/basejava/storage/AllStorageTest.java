@@ -12,7 +12,7 @@ import org.junit.runners.Suite;
 		MapUuidStorageTest.class
 })
 
-public class SuiteTest {
+public class AllStorageTest {
 
 
 }

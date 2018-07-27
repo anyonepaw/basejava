@@ -5,34 +5,34 @@ import ru.javawebinar.basejava.model.Resume;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ListStorage extends AbstractStorage {
+public class ListStorage extends AbstractStorage<Integer> {
 
 	private List<Resume> arrayList = new ArrayList<>();
 
 	@Override
-	protected void doSave(Resume resume, Object key) {
+	protected void doSave(Resume resume, Integer key) {
 		arrayList.add(resume);
 	}
 
 	@Override
-	protected Resume doGet(Object key) {
-		return arrayList.get((int) key);
+	protected Resume doGet(Integer key) {
+		return arrayList.get(key);
 	}
 
 	@Override
-	protected void doUpdate(Resume resume, Object key) {
-		arrayList.set((int) key, resume);
+	protected void doUpdate(Resume resume, Integer key) {
+		arrayList.set(key, resume);
 	}
 
 	@Override
-	protected void doDelete(Object key) {
-		arrayList.remove(((int) key));
+	protected void doDelete(Integer key) {
+		arrayList.remove((int) key);
 	}
 
 	@Override
 	protected Integer getSearchKey(String uuid) {
 		for (int i = 0; i < arrayList.size(); i++) {
-			if(arrayList.get(i).getUuid().equals(uuid)){
+			if (arrayList.get(i).getUuid().equals(uuid)) {
 				return i;
 			}
 		}
@@ -45,7 +45,7 @@ public class ListStorage extends AbstractStorage {
 	}
 
 	@Override
-	public List<Resume> getValues() {
+	public List<Resume> doCopyAll() {
 		return arrayList;
 	}
 
@@ -55,7 +55,7 @@ public class ListStorage extends AbstractStorage {
 	}
 
 	@Override
-	protected boolean contains(Object key) {
-		return (int) key >= 0;
+	protected boolean contains(Integer key) {
+		return key >= 0;
 	}
 }

@@ -4,33 +4,32 @@ import ru.javawebinar.basejava.model.Resume;
 
 import java.util.*;
 
-public class MapStorage extends AbstractStorage {
+public class MapStorage extends AbstractStorage<Resume> {
 
 	private Map<String, Resume> map = new HashMap<>();
 
 	@Override
-	protected void doSave(Resume resume, Object key) {
+	protected void doSave(Resume resume, Resume key) {
 		map.put(resume.getUuid(), resume);
 	}
 
 	@Override
-	protected Resume doGet(Object key) {
-		return (Resume) key;
+	protected Resume doGet(Resume key) {
+		return key;
 	}
 
 	@Override
-	protected void doUpdate(Resume resume, Object key) {
+	protected void doUpdate(Resume resume, Resume key) {
 		map.put(resume.getUuid(), resume);
 	}
 
 	@Override
-	protected void doDelete(Object key) {
-		Resume resume = (Resume) key;
-		map.remove(resume.getUuid());
+	protected void doDelete(Resume key) {
+		map.remove(key.getUuid());
 	}
 
 	@Override
-	public Object getSearchKey(String uuid) {
+	public Resume getSearchKey(String uuid) {
 		return map.get(uuid);
 	}
 
@@ -40,18 +39,13 @@ public class MapStorage extends AbstractStorage {
 	}
 
 	@Override
-	public List<Resume> getValues() {
+	public List<Resume> doCopyAll() {
 		return new ArrayList<>(map.values());
 	}
 
 	@Override
-	protected boolean contains(Object key) {
-		if(key != null) {
-			Resume resume = (Resume) key;
-			return map.containsKey(resume.getUuid());
-		}else {
-			return false;
-		}
+	protected boolean contains(Resume key) {
+		return key != null;
 	}
 
 	@Override

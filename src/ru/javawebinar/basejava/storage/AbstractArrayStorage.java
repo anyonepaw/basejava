@@ -6,7 +6,7 @@ import ru.javawebinar.basejava.model.Resume;
 import java.util.Arrays;
 import java.util.List;
 
-public abstract class AbstractArrayStorage extends AbstractStorage {
+public abstract class AbstractArrayStorage extends AbstractStorage<Integer> {
 
 	protected static final int STORAGE_LIMIT = 10000;
 	protected Resume[] storage = new Resume[STORAGE_LIMIT];
@@ -17,11 +17,11 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
 		size = 0;
 	}
 
-	public final void doUpdate(Resume resume, Object index) {
+	public final void doUpdate(Resume resume, Integer index) {
 		storage[(int) index] = resume;
 	}
 
-	public final void doSave(Resume resume, Object index) {
+	public final void doSave(Resume resume, Integer index) {
 		if (size == STORAGE_LIMIT) {
 			throw new StorageException("Storage is full.", resume.getUuid());
 		}
@@ -29,22 +29,22 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
 		size++;
 	}
 
-	public final void doDelete(Object index) {
+	public final void doDelete(Integer index) {
 		fillDeletedElement((int) index);
 		storage[--size] = null;
 	}
 
-	public final Resume doGet(Object index) {
+	public final Resume doGet(Integer index) {
 		return storage[(int) index];
 	}
 
 	@Override
-	public List<Resume> getValues() {
+	public List<Resume> doCopyAll() {
 		return Arrays.asList(Arrays.copyOf(storage, size));
 	}
 
 	@Override
-	protected boolean contains(Object key) {
+	protected boolean contains(Integer key) {
 		return (int) key >= 0;
 	}
 

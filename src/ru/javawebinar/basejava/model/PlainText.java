@@ -4,15 +4,15 @@ public class PlainText extends Text {
 
 	private String plainText;
 
-	@Override
-	public void addContent(String title, String... text) {
-		StringBuilder stringBuilder = new StringBuilder();
-		for (String line : text) {
-			plainText = stringBuilder.append(line).append("\n").toString();
-		}
+	public PlainText(String plainText) {
+		this.plainText = plainText;
 	}
 
-	@Override
+	public PlainText(String ... array) {
+		StringBuilder sb = new StringBuilder();
+		plainText = sb.append(array[0]).append("\n").append(array[1]).append(" ").append(array[2]).toString();
+	}
+
 	public String toString() {
 		return plainText;
 	}

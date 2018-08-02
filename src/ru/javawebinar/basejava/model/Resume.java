@@ -1,6 +1,5 @@
 package ru.javawebinar.basejava.model;
 
-
 import java.util.*;
 
 /**
@@ -13,10 +12,9 @@ public class Resume implements Comparable<Resume> {
 
 	private final String fullName;
 
-	private Map<SectionType, Text> sections = new LinkedHashMap<>();
+	private EnumMap<SectionType, Text> sections = new EnumMap<>(SectionType.class);
 
-	private Map<String, String> contacts = new LinkedHashMap<>();
-
+	private EnumMap<ContactType, String> contacts = new EnumMap<>(ContactType.class);
 
 	public Resume(String fullName) {
 		this(UUID.randomUUID().toString(), fullName);
@@ -40,12 +38,15 @@ public class Resume implements Comparable<Resume> {
 
 		Resume resume = (Resume) o;
 
-		return uuid.equals(resume.uuid);
+		if (!uuid.equals(resume.uuid)) return false;
+		return fullName.equals(resume.fullName);
 	}
 
 	@Override
 	public int hashCode() {
-		return uuid.hashCode();
+		int result = uuid.hashCode();
+		result = 31 * result + fullName.hashCode();
+		return result;
 	}
 
 	@Override
@@ -63,12 +64,11 @@ public class Resume implements Comparable<Resume> {
 		return cmp != 0 ? cmp : uuid.compareTo(r.uuid);
 	}
 
-	public Map<SectionType, Text> getSections() {
+	public EnumMap<SectionType, Text> getSections() {
 		return sections;
 	}
 
-	public Map<String, String> getContacts() {
+	public EnumMap<ContactType, String> getContacts() {
 		return contacts;
 	}
-
 }

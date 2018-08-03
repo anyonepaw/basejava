@@ -12,11 +12,7 @@ public class StringListText extends Text {
 	}
 
 	public String toString() {
-		StringBuilder stringBuilder = new StringBuilder();
-		for (String line: stringList) {
-			stringBuilder.append("- ").append(line).append("\n");
-		}
-		return stringBuilder.toString();
+		return String.join("\n", stringList);
 	}
 
 }

@@ -8,11 +8,6 @@ public class PlainText extends Text {
 		this.plainText = plainText;
 	}
 
-	public PlainText(String ... array) {
-		StringBuilder sb = new StringBuilder();
-		plainText = sb.append(array[0]).append("\n").append(array[1]).append(" ").append(array[2]).toString();
-	}
-
 	public String toString() {
 		return plainText;
 	}

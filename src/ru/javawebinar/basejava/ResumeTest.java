@@ -22,8 +22,8 @@ public class ResumeTest {
 		sections.put(SectionType.OBJECTIVE,new PlainText("Ведущий стажировок и корпоративного обучения по Java Web и Enterprise технологиям"));
 
 		sections.put(SectionType.ACHIEVEMENT, new StringListText(new ArrayList<>(Arrays.asList(
-				"С 2013 года: разработка проектов \\\"Разработка Web приложения\\\",\\\"Java Enterprise\\\", \\\"Многомодульный maven. Многопоточность. XML (JAXB/StAX).\\\"\" +\n" +
-						"\t\t\t\t\t\t\"Веб сервисы (JAX-RS/SOAP). Удаленное взаимодействие (JMS/AKKA). Организация онлайн стажировок и ведение проектов. Более 1000 выпускников.\"",
+				"С 2013 года: разработка проектов \"Разработка Web приложения\",\"Java Enterprise\", \"Многомодульный maven. Многопоточность. XML (JAXB/StAX).\"" +
+						"\"Веб сервисы (JAX-RS/SOAP). Удаленное взаимодействие (JMS/AKKA). Организация онлайн стажировок и ведение проектов. Более 1000 выпускников.\"",
 				"Реализация двухфакторной аутентификации для онлайн платформы управления проектами Wrike. Интеграция с Twilio, DuoSecurity, Google Authenticator, Jira, Zendesk.",
 				"Налаживание процесса разработки и непрерывной интеграции ERP системы River BPM. Интеграция с 1С, Bonita BPM, CMIS, LDAP."))));
 
@@ -34,12 +34,12 @@ public class ResumeTest {
 				"MySQL, SQLite, MS SQL, HSQLDB"))));
 
 		sections.put(SectionType.EXPERIENCE, new StringListText(new ArrayList<>(Arrays.asList(
-				new PlainText("Java Online Projects",
+				new OrganizationDescText("Java Online Projects",
 				"10/2013 - Сейчас", "Автор проекта. Создание, организация и проведение Java онлайн проектов и стажировок.").toString()))));
 
 		sections.put(SectionType.EDUCATION, new StringListText(new ArrayList<>(Arrays.asList(
-				new PlainText("Coursera", "03/2013 - 05/2013", "\"Functional Programming Principles in Scala\" by Martin Odersky").toString(),
-				new PlainText("Luxoft", "03/2011 - 04/2011", "Курс \"Объектно-ориентированный анализ ИС. Концептуальное моделирование на UML.\"").toString()))));
+				new OrganizationDescText("Coursera", "03/2013 - 05/2013", "\"Functional Programming Principles in Scala\" by Martin Odersky").toString(),
+				new OrganizationDescText("Luxoft", "03/2011 - 04/2011", "Курс \"Объектно-ориентированный анализ ИС. Концептуальное моделирование на UML.\"").toString()))));
 
 
 		System.out.println(resume.getFullName());

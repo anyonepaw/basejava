@@ -35,12 +35,12 @@ public class ResumeTest {
 				"MySQL, SQLite, MS SQL, HSQLDB"))));
 
 		sections.put(SectionType.EXPERIENCE, new OrganizationText(new ArrayList<>(Arrays.asList(
-				new Organization("Java Online Projects",
-				LocalDate.of(2012, 10, 1), LocalDate.now(), "Автор проекта. Создание, организация и проведение Java онлайн проектов и стажировок.").toString()))));
+				new Organization("Java Online Projects", LocalDate.of(2012, 10, 1), LocalDate.now(),
+						"Автор проекта. Создание, организация и проведение Java онлайн проектов и стажировок.")))));
 
 		sections.put(SectionType.EDUCATION, new OrganizationText(new ArrayList<>(Arrays.asList(
-				new Organization("Luxoft", LocalDate.of(2011, 3, 1), LocalDate.of(2011, 4, 1), "Курс \"Объектно-ориентированный анализ ИС. Концептуальное моделирование на UML.\"").toString(),
-				new Organization("Coursera", LocalDate.of(2013, 3, 1), LocalDate.of(2013, 5, 1), "\"Functional Programming Principles in Scala\" by Martin Odersky").toString()))));
+				new Organization("Luxoft", LocalDate.of(2011, 3, 1), LocalDate.of(2011, 4, 1), "Курс \"Объектно-ориентированный анализ ИС. Концептуальное моделирование на UML.\""),
+				new Organization("Coursera", LocalDate.of(2013, 3, 1), LocalDate.of(2013, 5, 1), "\"Functional Programming Principles in Scala\" by Martin Odersky")))));
 
 		resume.setContacts(contacts);
 		resume.setSections(sections);

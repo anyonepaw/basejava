@@ -36,8 +36,8 @@ public class Organization {
 	public String toString() {
 		DateTimeFormatter dt = DateTimeFormatter.ofPattern("MM/yyyy");
 	return title + "\n" + dt.format(fromDate) + " - " +
-				(toDate.equals(LocalDate.now())? "Сейчас" : dt.format(toDate) +
-				"  " + description);
+				(toDate.equals(LocalDate.now())? "Сейчас" : dt.format(toDate)) +
+				"  " + description;
 	}
 
 }

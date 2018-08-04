@@ -1,17 +1,22 @@
 package ru.javawebinar.basejava.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class OrganizationText extends Text {
 
-	private List<String> orgList;
+	private List<Organization> orgList;
 
-	public OrganizationText(List<String> list) {
+	public OrganizationText(List<Organization> list) {
 		this.orgList = list;
 	}
 
 	public String toString() {
-		return String.join("\n", orgList);
+		List<String> list = new ArrayList<>();
+		for (Organization organization: orgList) {
+			list.add(organization.toString());
+		}
+		return String.join("\n", list);
 	}
 
 }

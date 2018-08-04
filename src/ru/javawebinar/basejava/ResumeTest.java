@@ -3,6 +3,7 @@ package ru.javawebinar.basejava;
 import ru.javawebinar.basejava.model.*;
 
 
+import java.time.LocalDate;
 import java.util.*;
 
 public class ResumeTest {
@@ -33,14 +34,16 @@ public class ResumeTest {
 				"DB: PostgreSQL(наследование, pgplsql, PL/Python), Redis (Jedis), H2, Oracle",
 				"MySQL, SQLite, MS SQL, HSQLDB"))));
 
-		sections.put(SectionType.EXPERIENCE, new StringListText(new ArrayList<>(Arrays.asList(
-				new OrganizationDescText("Java Online Projects",
-				"10/2013 - Сейчас", "Автор проекта. Создание, организация и проведение Java онлайн проектов и стажировок.").toString()))));
+		sections.put(SectionType.EXPERIENCE, new OrganizationText(new ArrayList<>(Arrays.asList(
+				new Organization("Java Online Projects",
+				LocalDate.of(2012, 10, 1), LocalDate.now(), "Автор проекта. Создание, организация и проведение Java онлайн проектов и стажировок.").toString()))));
 
-		sections.put(SectionType.EDUCATION, new StringListText(new ArrayList<>(Arrays.asList(
-				new OrganizationDescText("Coursera", "03/2013 - 05/2013", "\"Functional Programming Principles in Scala\" by Martin Odersky").toString(),
-				new OrganizationDescText("Luxoft", "03/2011 - 04/2011", "Курс \"Объектно-ориентированный анализ ИС. Концептуальное моделирование на UML.\"").toString()))));
+		sections.put(SectionType.EDUCATION, new OrganizationText(new ArrayList<>(Arrays.asList(
+				new Organization("Luxoft", LocalDate.of(2011, 3, 1), LocalDate.of(2011, 4, 1), "Курс \"Объектно-ориентированный анализ ИС. Концептуальное моделирование на UML.\"").toString(),
+				new Organization("Coursera", LocalDate.of(2013, 3, 1), LocalDate.of(2013, 5, 1), "\"Functional Programming Principles in Scala\" by Martin Odersky").toString()))));
 
+		resume.setContacts(contacts);
+		resume.setSections(sections);
 
 		System.out.println(resume.getFullName());
 		for (EnumMap.Entry<ContactType, String> contact : contacts.entrySet()) {

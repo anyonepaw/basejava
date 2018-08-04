@@ -27,6 +27,13 @@ public class Resume implements Comparable<Resume> {
 		this.fullName = fullName;
 	}
 
+	public Resume(String uuid, String fullName, EnumMap<SectionType, Text> sections, EnumMap<ContactType, String> contacts) {
+		this.uuid = uuid;
+		this.fullName = fullName;
+		this.sections = sections;
+		this.contacts = contacts;
+	}
+
 	public String getUuid() {
 		return uuid;
 	}
@@ -70,5 +77,13 @@ public class Resume implements Comparable<Resume> {
 
 	public EnumMap<ContactType, String> getContacts() {
 		return contacts;
+	}
+
+	public void setSections(EnumMap<SectionType, Text> sections) {
+		this.sections = sections;
+	}
+
+	public void setContacts(EnumMap<ContactType, String> contacts) {
+		this.contacts = contacts;
 	}
 }

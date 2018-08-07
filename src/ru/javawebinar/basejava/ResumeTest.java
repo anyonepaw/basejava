@@ -4,6 +4,7 @@ import ru.javawebinar.basejava.model.*;
 
 
 import java.time.LocalDate;
+import java.time.Month;
 import java.util.*;
 
 public class ResumeTest {
@@ -19,8 +20,8 @@ public class ResumeTest {
 
 		EnumMap<SectionType, Text> sections = resume.getSections();
 
-		sections.put(SectionType.PERSONAL,new PlainText("Аналитический склад ума, сильная логика, креативность, инициативность. Пурист кода и архитектуры."));
-		sections.put(SectionType.OBJECTIVE,new PlainText("Ведущий стажировок и корпоративного обучения по Java Web и Enterprise технологиям"));
+		sections.put(SectionType.PERSONAL, new PlainText("Аналитический склад ума, сильная логика, креативность, инициативность. Пурист кода и архитектуры."));
+		sections.put(SectionType.OBJECTIVE, new PlainText("Ведущий стажировок и корпоративного обучения по Java Web и Enterprise технологиям"));
 
 		sections.put(SectionType.ACHIEVEMENT, new StringListText(new ArrayList<>(Arrays.asList(
 				"С 2013 года: разработка проектов \"Разработка Web приложения\",\"Java Enterprise\", \"Многомодульный maven. Многопоточность. XML (JAXB/StAX).\"" +
@@ -34,13 +35,26 @@ public class ResumeTest {
 				"DB: PostgreSQL(наследование, pgplsql, PL/Python), Redis (Jedis), H2, Oracle",
 				"MySQL, SQLite, MS SQL, HSQLDB"))));
 
-		sections.put(SectionType.EXPERIENCE, new OrganizationText(new ArrayList<>(Arrays.asList(
-				new Organization("Java Online Projects", LocalDate.of(2012, 10, 1), LocalDate.now(),
-						"Автор проекта. Создание, организация и проведение Java онлайн проектов и стажировок.")))));
+		List<Organization> organizationWorkList = new ArrayList<>();
+		List<Job> jobs = new ArrayList<>();
+		jobs.add(new Job(2012, Month.OCTOBER, 2018, Month.JANUARY,
+				"Автор проекта.", "Создание, организация и проведение Java онлайн проектов и стажировок."));
+		organizationWorkList.add(new Organization("Java Online Projects", "", jobs));
 
-		sections.put(SectionType.EDUCATION, new OrganizationText(new ArrayList<>(Arrays.asList(
-				new Organization("Luxoft", LocalDate.of(2011, 3, 1), LocalDate.of(2011, 4, 1), "Курс \"Объектно-ориентированный анализ ИС. Концептуальное моделирование на UML.\""),
-				new Organization("Coursera", LocalDate.of(2013, 3, 1), LocalDate.of(2013, 5, 1), "\"Functional Programming Principles in Scala\" by Martin Odersky")))));
+		sections.put(SectionType.EXPERIENCE, new OrganizationText(organizationWorkList));
+
+		List<Organization> organizationStudyList = new ArrayList<>();
+		List<Job> jobs1 = new ArrayList<>();
+		jobs1.add(new Job(2011, Month.MARCH,2011, Month.APRIL, "Курс \"Объектно-ориентированный анализ ИС. Концептуальное моделирование на UML.\"", ""));
+		organizationStudyList.add(new Organization("Luxoft", "", jobs1));
+		List<Job> jobs2 = new ArrayList<>();
+		jobs2.add(new Job(2013,  Month.MARCH, 2013,  Month.MAY, "\"Functional Programming Principles in Scala\" by Martin Odersky", ""));
+		organizationStudyList.add(new Organization("Coursera", "", jobs2));
+		List<Job> jobs3 = new ArrayList<>();
+		jobs3.add(new Job(1987,  Month.SEPTEMBER, 1993,  Month.JULY, "Инженер (программист Fortran, C)", ""));
+		jobs3.add(new Job(1993,  Month.SEPTEMBER, 1996,  Month.JULY, "Аспирантура (программист С, С++)", ""));
+		organizationStudyList.add(new Organization("Санкт-Петербургский национальный исследовательский университет информационных технологий, механики и оптики", "", jobs3));
+		sections.put(SectionType.EDUCATION, new OrganizationText(organizationStudyList));
 
 		resume.setContacts(contacts);
 		resume.setSections(sections);

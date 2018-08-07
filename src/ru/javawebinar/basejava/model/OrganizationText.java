@@ -2,12 +2,14 @@ package ru.javawebinar.basejava.model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class OrganizationText extends Text {
 
 	private List<Organization> orgList;
 
 	public OrganizationText(List<Organization> list) {
+		Objects.requireNonNull(list, "organization list must not be null");
 		this.orgList = list;
 	}
 
@@ -19,4 +21,18 @@ public class OrganizationText extends Text {
 		return String.join("\n", list);
 	}
 
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+
+		OrganizationText that = (OrganizationText) o;
+
+		return orgList != null ? orgList.equals(that.orgList) : that.orgList == null;
+	}
+
+	@Override
+	public int hashCode() {
+		return orgList != null ? orgList.hashCode() : 0;
+	}
 }

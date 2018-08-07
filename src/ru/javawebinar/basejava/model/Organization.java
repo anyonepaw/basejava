@@ -1,43 +1,42 @@
 package ru.javawebinar.basejava.model;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 public class Organization {
 
-	private String title;
-	private LocalDate fromDate;
-	private LocalDate toDate;
-	private String description;
+	private Link homepage;
+	private List<Job> jobList;
 
-	public Organization(String title, LocalDate fromDate, LocalDate toDate, String description) {
-		this.title = title;
-		this.fromDate = fromDate;
-		this.toDate = toDate;
-		this.description = description;
+	public Organization(String name, String url, List<Job> jobList) {
+		this.homepage = new Link(name, url);
+		this.jobList = jobList;
 	}
 
-	public String getTitle() {
-		return title;
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+
+		Organization that = (Organization) o;
+
+		if (homepage != null ? !homepage.equals(that.homepage) : that.homepage != null) return false;
+		return jobList != null ? jobList.equals(that.jobList) : that.jobList == null;
 	}
 
-	public LocalDate getFromDate() {
-		return fromDate;
+	@Override
+	public int hashCode() {
+		int result = homepage != null ? homepage.hashCode() : 0;
+		result = 31 * result + (jobList != null ? jobList.hashCode() : 0);
+		return result;
 	}
 
-	public LocalDate getToDate() {
-		return toDate;
-	}
-
-	public String getDescription() {
-		return description;
-	}
-
+	@Override
 	public String toString() {
-		DateTimeFormatter dt = DateTimeFormatter.ofPattern("MM/yyyy");
-	return title + "\n" + dt.format(fromDate) + " - " +
-				(toDate.equals(LocalDate.now())? "Сейчас" : dt.format(toDate)) +
-				"  " + description;
+		StringBuilder sb = new StringBuilder();
+		sb.append(homepage.getName()).append("\n");
+		for (Job job : jobList) {
+			sb.append(job.toString());
+		}
+		return sb.toString();
 	}
-
 }

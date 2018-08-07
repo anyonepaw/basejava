@@ -6,9 +6,10 @@ import org.junit.Before;
 import org.junit.Test;
 import ru.javawebinar.basejava.exception.ExistStorageException;
 import ru.javawebinar.basejava.exception.NotExistStorageException;
-import ru.javawebinar.basejava.model.Resume;
+import ru.javawebinar.basejava.model.*;
 
 import java.util.Arrays;
+import java.util.EnumMap;
 import java.util.List;
 
 
@@ -16,6 +17,7 @@ import java.util.List;
 public abstract class AbstractStorageTest {
 
 	protected Storage storage;
+
 
 	private static final String UUID1 = "uuid1";
 	private static final String UUID2 = "uuid2";
@@ -33,7 +35,18 @@ public abstract class AbstractStorageTest {
 	}
 
 	static {
-		RESUME_1 = new Resume(UUID1, FULL_NAME1);
+		EnumMap<ContactType, String> contacts = new EnumMap<>(ContactType.class);
+
+		contacts.put(ContactType.TELEPHONE, "+7(921) 855-0482");
+		contacts.put(ContactType.SKYPE, "grigory.kislin");
+		contacts.put(ContactType.MAIL, "gkislin@yandex.ru");
+
+		EnumMap<SectionType, Text> sections = new EnumMap<>(SectionType.class);
+
+		sections.put(SectionType.PERSONAL, new PlainText("Аналитический склад ума, сильная логика, креативность, инициативность. Пурист кода и архитектуры."));
+		sections.put(SectionType.OBJECTIVE, new PlainText("Ведущий стажировок и корпоративного обучения по Java Web и Enterprise технологиям"));
+
+		RESUME_1 = new Resume(UUID1, FULL_NAME1, sections, contacts);
 		RESUME_2 = new Resume(UUID2, FULL_NAME2);
 		RESUME_3 = new Resume(UUID3, FULL_NAME3);
 	}

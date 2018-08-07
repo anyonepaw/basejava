@@ -38,7 +38,7 @@ public class MainFile {
 		File[] files = new File(fileName).listFiles();
 
 		for (File file: Objects.requireNonNull(files)){
-			System.out.println(file.getAbsolutePath());
+			System.out.println(file.getName());
 			if(file.isDirectory()){
 				printFileNames(file.getAbsolutePath());
 			}

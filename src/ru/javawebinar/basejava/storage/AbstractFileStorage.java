@@ -1,10 +1,12 @@
 package ru.javawebinar.basejava.storage;
 
 import ru.javawebinar.basejava.exception.StorageException;
+import ru.javawebinar.basejava.model.Link;
 import ru.javawebinar.basejava.model.Resume;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -24,7 +26,17 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
 
 	@Override
 	protected List<Resume> doCopyAll() {
-		return null;
+		List<Resume> resumes = new ArrayList<>();
+		try {
+			for (File file : directory.listFiles()) {
+				if (file.isFile()) {
+				  resumes.add(doGet(file));
+				}
+			}
+		}catch (NullPointerException e){
+			throw new StorageException("Directory is empty: ", directory.getAbsolutePath(), e);
+		}
+		return resumes;
 	}
 
 	@Override
@@ -47,11 +59,11 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
 
 	@Override
 	protected Resume doGet(File file) {
-		Resume resume = null;
+		Resume resume;
 		try {
 			resume = doRead(file);
 		} catch (IOException e) {
-			e.printStackTrace();
+			throw new StorageException("IO Error", file.getName(), e);
 		}
 		return resume;
 	}
@@ -60,16 +72,14 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
 
 	@Override
 	protected void doUpdate(Resume resume, File file) {
-		try {
-			doWrite(resume, file);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+			doSave(resume, file);
 	}
 
 	@Override
 	protected void doDelete(File file) {
-		file.delete();
+		if(!file.delete()){
+			throw new StorageException("Cannot delete a file: ", file.getName());
+		}
 	}
 
 	@Override
@@ -79,20 +89,30 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
 
 	@Override
 	public void clear() {
-		for(File file: Objects.requireNonNull(directory.listFiles())){
-			if(file.isFile()){
-				file.delete();
+		try {
+			for (File file : directory.listFiles()) {
+				if (file.isFile()) {
+					if(!file.delete()){
+						throw new StorageException("Cannot delete a file: ", file.getName());
+					}
+				}
 			}
+		} catch (NullPointerException e){
+			throw new StorageException("Directory is empty: ", directory.getAbsolutePath(), e);
 		}
 	}
 
 	@Override
 	public int size() {
 		int numberOfFilesInDirectory = 0;
-		for(File file: Objects.requireNonNull(directory.listFiles())){
-			if(file.isFile()){
-				numberOfFilesInDirectory++;
+		try {
+			for (File file : directory.listFiles()) {
+				if (file.isFile()) {
+					numberOfFilesInDirectory++;
+				}
 			}
+		}catch (NullPointerException e){
+			throw new StorageException("Directory is empty: ", directory.getAbsolutePath(), e);
 		}
 		return numberOfFilesInDirectory;
 	}

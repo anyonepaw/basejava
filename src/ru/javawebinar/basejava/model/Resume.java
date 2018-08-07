@@ -27,7 +27,7 @@ public class Resume implements Comparable<Resume> {
 		this.fullName = fullName;
 	}
 
-	public Resume(String uuid, String fullName, EnumMap<SectionType, Text> sections, EnumMap<ContactType, String> contacts) {
+	public Resume(String uuid, String fullName, EnumMap<ContactType, String> contacts, EnumMap<SectionType, Text> sections) {
 		this.uuid = uuid;
 		this.fullName = fullName;
 		this.sections = sections;

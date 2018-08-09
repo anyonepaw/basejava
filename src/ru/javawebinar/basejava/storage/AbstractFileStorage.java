@@ -26,11 +26,9 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
 	@Override
 	protected List<Resume> doCopyAll() {
 		List<Resume> resumes = new ArrayList<>();
-			for (File file : directoryArray()) {
-				if (file.isFile()) {
-					resumes.add(doGet(file));
-				}
-			}
+		for (File file : directoryArray()) {
+			resumes.add(doGet(file));
+		}
 		return resumes;
 	}
 
@@ -41,7 +39,12 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
 
 	@Override
 	protected void doSave(Resume resume, File file) {
-		doUpdate(resume, file);
+		try {
+			file.createNewFile();
+			doUpdate(resume, file);
+		} catch (IOException e) {
+			throw new StorageException("IO Error", file.getName(), e);
+		}
 	}
 
 	protected abstract void doWrite(Resume r, File file) throws IOException;
@@ -63,7 +66,6 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
 	@Override
 	protected void doUpdate(Resume resume, File file) {
 		try {
-			file.createNewFile();
 			doWrite(resume, file);
 		} catch (IOException e) {
 			throw new StorageException("IO Error", file.getName(), e);

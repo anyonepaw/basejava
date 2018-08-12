@@ -1,6 +1,7 @@
 package ru.javawebinar.basejava.model;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
@@ -13,12 +14,16 @@ public class OrganizationText extends Text {
 		this.orgList = list;
 	}
 
+	public OrganizationText(Organization ... organizations) {
+		this(Arrays.asList(organizations));
+	}
+
 	public String toString() {
 		List<String> list = new ArrayList<>();
 		for (Organization organization: orgList) {
 			list.add(organization.toString());
 		}
-		return String.join("\n", list);
+		return String.join("", list);
 	}
 
 	@Override

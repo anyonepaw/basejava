@@ -1,14 +1,26 @@
 package ru.javawebinar.basejava.model;
 
+
+import java.time.LocalDate;
+import java.time.Month;
+import java.time.format.DateTimeFormatter;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
+
+import static ru.javawebinar.basejava.util.DateUtil.*;
 
 public class Organization {
 
-	private Link homepage;
+	private Link homePage;
 	private List<Job> jobList;
 
-	public Organization(String name, String url, List<Job> jobList) {
-		this.homepage = new Link(name, url);
+	public Organization(String name, String url, Job... jobs) {
+		this(new Link(name, url), Arrays.asList(jobs));
+	}
+
+	public Organization(Link homePage, List<Job> jobList) {
+		this.homePage = homePage;
 		this.jobList = jobList;
 	}
 
@@ -19,13 +31,13 @@ public class Organization {
 
 		Organization that = (Organization) o;
 
-		if (homepage != null ? !homepage.equals(that.homepage) : that.homepage != null) return false;
+		if (homePage != null ? !homePage.equals(that.homePage) : that.homePage != null) return false;
 		return jobList != null ? jobList.equals(that.jobList) : that.jobList == null;
 	}
 
 	@Override
 	public int hashCode() {
-		int result = homepage != null ? homepage.hashCode() : 0;
+		int result = homePage != null ? homePage.hashCode() : 0;
 		result = 31 * result + (jobList != null ? jobList.hashCode() : 0);
 		return result;
 	}
@@ -33,10 +45,84 @@ public class Organization {
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
-		sb.append(homepage.getName()).append("\n");
+		sb.append(homePage.getName()).append("\n");
 		for (Job job : jobList) {
-			sb.append(job.toString());
+			sb.append(job.toString()).append("\n");
 		}
 		return sb.toString();
+	}
+
+	public static class Job {
+
+		private final LocalDate fromDate;
+		private final LocalDate toDate;
+		private final String title;
+		private final String description;
+
+
+		public Job(LocalDate fromDate, LocalDate toDate, String title, String description) {
+			Objects.requireNonNull(fromDate, "fromDate must not be null");
+			Objects.requireNonNull(toDate, "toDate must not be null");
+			Objects.requireNonNull(title, "title must not be null");
+			this.fromDate = fromDate;
+			this.toDate = toDate;
+			this.title = title;
+			this.description = description;
+		}
+
+		public Job(int fromYear, Month fromMonth, String title, String description) {
+			this(of(fromYear, fromMonth), NOW, title, description);
+		}
+
+		public Job(int startYear, Month startMonth, int endYear, Month endMonth, String title, String description) {
+			this(of(startYear, startMonth), of(endYear, endMonth), title, description);
+		}
+
+		public String getTitle() {
+			return title;
+		}
+
+		public LocalDate getFromDate() {
+			return fromDate;
+		}
+
+		public LocalDate getToDate() {
+			return toDate;
+		}
+
+		public String getDescription() {
+			return description;
+		}
+
+		@Override
+		public String toString() {
+			DateTimeFormatter df = DateTimeFormatter.ofPattern("MM/YYYY");
+			return fromDate.format(df) +
+					" - " + toDate.format(df) +
+					":  " + title + '\n' +
+					description;
+		}
+
+		@Override
+		public boolean equals(Object o) {
+			if (this == o) return true;
+			if (o == null || getClass() != o.getClass()) return false;
+
+			Job job = (Job) o;
+
+			if (fromDate != null ? !fromDate.equals(job.fromDate) : job.fromDate != null) return false;
+			if (toDate != null ? !toDate.equals(job.toDate) : job.toDate != null) return false;
+			if (title != null ? !title.equals(job.title) : job.title != null) return false;
+			return description != null ? description.equals(job.description) : job.description == null;
+		}
+
+		@Override
+		public int hashCode() {
+			int result = fromDate != null ? fromDate.hashCode() : 0;
+			result = 31 * result + (toDate != null ? toDate.hashCode() : 0);
+			result = 31 * result + (title != null ? title.hashCode() : 0);
+			result = 31 * result + (description != null ? description.hashCode() : 0);
+			return result;
+		}
 	}
 }

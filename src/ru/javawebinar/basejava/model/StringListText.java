@@ -1,11 +1,17 @@
 package ru.javawebinar.basejava.model;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
 public class StringListText extends Text {
 
-	private List<String> stringList;
+	private final List<String> stringList;
+
+	public StringListText(String...items) {
+		this(Arrays.asList(items));
+	}
 
 	public StringListText(List<String> stringList) {
 		Objects.requireNonNull(stringList, "list must not be null");

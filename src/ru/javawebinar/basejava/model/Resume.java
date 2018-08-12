@@ -71,19 +71,28 @@ public class Resume implements Comparable<Resume> {
 		return cmp != 0 ? cmp : uuid.compareTo(r.uuid);
 	}
 
+
+	public String getContact(ContactType type) {
+		return contacts.get(type);
+	}
+
+	public Text getSection(SectionType type) {
+		return sections.get(type);
+	}
+
+	public void addContact(ContactType type, String value) {
+		contacts.put(type, value);
+	}
+
+	public void addSection(SectionType type, Text section) {
+		sections.put(type, section);
+	}
+
 	public EnumMap<SectionType, Text> getSections() {
 		return sections;
 	}
 
 	public EnumMap<ContactType, String> getContacts() {
 		return contacts;
-	}
-
-	public void setSections(EnumMap<SectionType, Text> sections) {
-		this.sections = sections;
-	}
-
-	public void setContacts(EnumMap<ContactType, String> contacts) {
-		this.contacts = contacts;
 	}
 }

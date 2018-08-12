@@ -30,17 +30,19 @@ public class MainFile {
 		}
 
 
-		printFileNames("./src/ru/javawebinar/basejava/");
+		printDirectoryDeeply(dir);
 	}
 
 
-	public static void printFileNames(String fileName){
-		File[] files = new File(fileName).listFiles();
+	public static void printDirectoryDeeply(File dir){
+		File[] files = dir.listFiles();
 
 		for (File file: Objects.requireNonNull(files)){
-			System.out.println(file.getName());
-			if(file.isDirectory()){
-				printFileNames(file.getAbsolutePath());
+			if(file.isFile()) {
+				System.out.println("File:" + file.getName());
+			} else if(file.isDirectory()){
+				System.out.println("Directory:" + file.getName());
+				printDirectoryDeeply(file);
 			}
 		}
 

@@ -1,6 +1,7 @@
 package ru.javawebinar.basejava.model;
 
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.Month;
 import java.time.format.DateTimeFormatter;
@@ -10,7 +11,9 @@ import java.util.Objects;
 
 import static ru.javawebinar.basejava.util.DateUtil.*;
 
-public class Organization {
+public class Organization implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 
 	private Link homePage;
 	private List<Job> jobList;
@@ -52,7 +55,7 @@ public class Organization {
 		return sb.toString();
 	}
 
-	public static class Job {
+	public static class Job implements Serializable{
 
 		private final LocalDate fromDate;
 		private final LocalDate toDate;

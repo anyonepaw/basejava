@@ -1,5 +1,7 @@
 package ru.javawebinar.basejava.model;
 
-public abstract class Text {
+import java.io.Serializable;
+
+public abstract class Text implements Serializable {
 
 }

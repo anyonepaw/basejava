@@ -2,6 +2,8 @@ package ru.javawebinar.basejava.model;
 
 public class PlainText extends Text {
 
+	private static final long serialVersionUID = 1L;
+
 	private String plainText;
 
 	public PlainText(String plainText) {

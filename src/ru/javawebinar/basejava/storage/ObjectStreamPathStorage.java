@@ -4,11 +4,12 @@ import ru.javawebinar.basejava.exception.StorageException;
 import ru.javawebinar.basejava.model.Resume;
 
 import java.io.*;
+import java.nio.file.Path;
 
-public class ObjectStreamStorage extends AbstractFileStorage implements StrategyWriteRead {
+public class ObjectStreamPathStorage extends AbstractPathStorage implements StrategyWriteRead {
 
-	protected ObjectStreamStorage(File directory) {
-		super(directory);
+	protected ObjectStreamPathStorage(Path directory) {
+		super(directory.toAbsolutePath().toString());
 	}
 
 	@Override
@@ -26,4 +27,6 @@ public class ObjectStreamStorage extends AbstractFileStorage implements Strategy
 			throw new StorageException("Error read resume", null, e);
 		}
 	}
+
+
 }

@@ -8,10 +8,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public abstract class AbstractFileStorage extends AbstractStorage<File> {
+public class FileStorage extends AbstractStorage<File> {
 	private File directory;
+	private StreamStrategy streamStrategy;
 
-	protected AbstractFileStorage(File directory) {
+	protected FileStorage(File directory, StreamStrategy streamStrategy) {
 		Objects.requireNonNull(directory, "directory must not be null");
 		if (!directory.isDirectory()) {
 			throw new IllegalArgumentException(directory.getAbsolutePath() + " is not a directory");
@@ -20,6 +21,7 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
 			throw new IllegalArgumentException(directory.getAbsolutePath() + "is not readable/writable");
 		}
 		this.directory = directory;
+		this.streamStrategy = streamStrategy;
 	}
 
 	@Override
@@ -47,12 +49,11 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
 	}
 
 
-
 	@Override
 	protected Resume doGet(File file) {
 		Resume resume;
 		try {
-			resume = doRead(new BufferedInputStream(new FileInputStream(file)));
+			resume = streamStrategy.doRead(new BufferedInputStream(new FileInputStream(file)));
 		} catch (IOException e) {
 			throw new StorageException("File read error", file.getName(), e);
 		}
@@ -60,15 +61,10 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
 	}
 
 
-	protected abstract void doWrite(Resume r, OutputStream os) throws IOException;
-
-	protected abstract Resume doRead(InputStream is) throws IOException;
-
-
 	@Override
 	protected void doUpdate(Resume resume, File file) {
 		try {
-			doWrite(resume, new BufferedOutputStream(new FileOutputStream(file)));
+			streamStrategy.doWrite(resume, new BufferedOutputStream(new FileOutputStream(file)));
 		} catch (IOException e) {
 			throw new StorageException("File write error", file.getName(), e);
 		}

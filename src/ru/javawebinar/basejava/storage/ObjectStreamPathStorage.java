@@ -4,13 +4,8 @@ import ru.javawebinar.basejava.exception.StorageException;
 import ru.javawebinar.basejava.model.Resume;
 
 import java.io.*;
-import java.nio.file.Path;
 
-public class ObjectStreamPathStorage extends AbstractPathStorage implements StrategyWriteRead {
-
-	protected ObjectStreamPathStorage(Path directory) {
-		super(directory.toAbsolutePath().toString());
-	}
+public class ObjectStreamPathStorage implements StreamStrategy {
 
 	@Override
 	public void doWrite(Resume r, OutputStream os) throws IOException {

@@ -8,12 +8,14 @@ import ru.javawebinar.basejava.exception.ExistStorageException;
 import ru.javawebinar.basejava.exception.NotExistStorageException;
 import ru.javawebinar.basejava.model.*;
 
+import java.io.File;
 import java.time.Month;
 import java.util.*;
 
 
 public abstract class AbstractStorageTest {
 
+	protected static final File STORAGE_DIR = new File("/Users/Angelika/Documents/Projects/basejava/src/ru/javawebinar/basejava/storage/resumes");
 	protected Storage storage;
 
 

@@ -2,6 +2,7 @@ package ru.javawebinar.basejava.storage;
 
 import ru.javawebinar.basejava.exception.StorageException;
 import ru.javawebinar.basejava.model.Resume;
+import ru.javawebinar.basejava.storage.streamStrategy.StreamStrategy;
 
 import java.io.*;
 import java.nio.file.Files;
@@ -27,17 +28,12 @@ public class PathStorage extends AbstractStorage<Path> {
 
 	@Override
 	protected List<Resume> doCopyAll() {
-		List<Path> paths;
 		try {
-			paths = Files.list(directory).collect(Collectors.toList());
+			return Files.list(directory).map(this::doGet).collect(Collectors.toList());
 		} catch (IOException e) {
-			throw new StorageException("Couldn't show a list of resumes in path: " + directory.toAbsolutePath(), directory.getFileName().toString(), e);
+			e.printStackTrace();
 		}
-		List<Resume> resumes = new ArrayList<>();
-		for (Path path : paths) {
-			resumes.add(doGet(path));
-		}
-		return resumes;
+		return null;
 	}
 
 	@Override
@@ -54,7 +50,7 @@ public class PathStorage extends AbstractStorage<Path> {
 	protected Resume doGet(Path path) {
 		Resume resume;
 		try {
-			resume = streamStrategy.doRead(Files.newInputStream(path));
+			resume = streamStrategy.doRead(new BufferedInputStream(Files.newInputStream(path)));
 		} catch (IOException e) {
 			throw new StorageException("File read error", path.getFileName().toString(), e);
 		}
@@ -64,7 +60,7 @@ public class PathStorage extends AbstractStorage<Path> {
 	@Override
 	protected void doUpdate(Resume resume, Path path) {
 		try {
-			streamStrategy.doWrite(resume, Files.newOutputStream(path));
+			streamStrategy.doWrite(resume, (new BufferedOutputStream(Files.newOutputStream(path))));
 		} catch (IOException e) {
 			throw new StorageException("File write error", path.getFileName().toString(), e);
 		}
@@ -81,7 +77,7 @@ public class PathStorage extends AbstractStorage<Path> {
 
 	@Override
 	protected Path getSearchKey(String uuid) {
-		return new File(directory.toFile(), uuid).toPath();
+		return directory.resolve("/uuid");
 	}
 
 	@Override
@@ -95,12 +91,11 @@ public class PathStorage extends AbstractStorage<Path> {
 
 	@Override
 	public int size() {
-		int size;
 		try {
-			size = (int) Files.list(directory).count();
+			return (int) Files.list(directory).count();
 		} catch (IOException e) {
-			throw new StorageException("Getting path size error", null);
+			e.printStackTrace();
 		}
-		return size;
+		return -1;
 	}
 }

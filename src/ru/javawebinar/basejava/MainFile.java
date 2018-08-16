@@ -29,31 +29,21 @@ public class MainFile {
 //			throw new RuntimeException(e);
 //		}
 
-
-		printDirectoryDeeply(dir, -1);
+		printDirectoryDeeply(dir, "");
 	}
 
 
-	public static void printDirectoryDeeply(File dir, int indent) {
-		indent++;
+	public static void printDirectoryDeeply(File dir, String indent) {
 		File[] files = dir.listFiles();
 		for (File file : Objects.requireNonNull(files)) {
-			if (file.isFile()) {
-				System.out.println(indentToString(indent) + "File:" + file.getName());
-			} else if (file.isDirectory()) {
-				System.out.println(indentToString(indent) + "Directory:" + file.getName());
-				printDirectoryDeeply(file, indent);
+			if (file.isDirectory()) {
+				System.out.println(indent + "Directory:" + file.getName());
+				printDirectoryDeeply(file, indent + " ");
 			}
 		}
 	}
 
-	private static String indentToString(int indent) {
-		StringBuilder sb = new StringBuilder();
-		for (int i = 0; i < indent; i++) {
-			sb.append(" ");
-		}
-		return sb.toString();
-	}
+
 
 }
 

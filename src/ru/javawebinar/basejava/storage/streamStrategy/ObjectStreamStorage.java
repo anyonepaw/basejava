@@ -1,7 +1,8 @@
-package ru.javawebinar.basejava.storage;
+package ru.javawebinar.basejava.storage.streamStrategy;
 
 import ru.javawebinar.basejava.exception.StorageException;
 import ru.javawebinar.basejava.model.Resume;
+import ru.javawebinar.basejava.storage.streamStrategy.StreamStrategy;
 
 import java.io.*;
 

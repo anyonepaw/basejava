@@ -5,6 +5,9 @@ import java.time.Month;
 
 public class DateUtil {
 
+	public DateUtil() {
+	}
+
 	public static final LocalDate NOW = LocalDate.of(3000, 1,1);
 
 	public static LocalDate of(int year, Month month){

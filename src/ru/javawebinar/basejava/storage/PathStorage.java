@@ -38,7 +38,6 @@ public class PathStorage extends AbstractStorage<Path> {
 
 	@Override
 	protected void doSave(Resume resume, Path path) {
-
 		try {
 			Files.createFile(path);
 		} catch (IOException e) {
@@ -76,7 +75,7 @@ public class PathStorage extends AbstractStorage<Path> {
 
 	@Override
 	protected Path getSearchKey(String uuid) {
-		return directory.resolve("/uuid");
+		return directory.resolve(uuid);
 	}
 
 	@Override

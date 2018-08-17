@@ -1,15 +1,20 @@
 package ru.javawebinar.basejava.model;
 
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
+
 
 public class OrganizationText extends Text {
 
 	private static final long serialVersionUID = 1L;
 
 	private List<Organization> orgList;
+
+	public OrganizationText() {
+	}
 
 	public OrganizationText(List<Organization> list) {
 		Objects.requireNonNull(list, "organization list must not be null");

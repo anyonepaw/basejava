@@ -1,6 +1,10 @@
 package ru.javawebinar.basejava.model;
 
+import ru.javawebinar.basejava.util.LocalDateAdapter;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.Month;
@@ -11,12 +15,16 @@ import java.util.Objects;
 
 import static ru.javawebinar.basejava.util.DateUtil.*;
 
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Organization implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
 	private Link homePage;
 	private List<Job> jobList;
+
+	public Organization() {
+	}
 
 	public Organization(String name, String url, Job... jobs) {
 		this(new Link(name, url), Arrays.asList(jobs));
@@ -55,13 +63,18 @@ public class Organization implements Serializable {
 		return sb.toString();
 	}
 
+	@XmlAccessorType(XmlAccessType.FIELD)
 	public static class Job implements Serializable{
 
-		private final LocalDate fromDate;
-		private final LocalDate toDate;
-		private final String title;
-		private final String description;
+		@XmlJavaTypeAdapter(LocalDateAdapter.class)
+		private LocalDate fromDate;
+		@XmlJavaTypeAdapter(LocalDateAdapter.class)
+		private LocalDate toDate;
+		private String title;
+		private String description;
 
+		public Job() {
+		}
 
 		public Job(LocalDate fromDate, LocalDate toDate, String title, String description) {
 			Objects.requireNonNull(fromDate, "fromDate must not be null");

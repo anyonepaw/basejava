@@ -1,12 +1,11 @@
-package ru.javawebinar.basejava.storage.streamStrategy;
+package ru.javawebinar.basejava.storage.serializer;
 
 import ru.javawebinar.basejava.exception.StorageException;
 import ru.javawebinar.basejava.model.Resume;
-import ru.javawebinar.basejava.storage.streamStrategy.StreamStrategy;
 
 import java.io.*;
 
-public class ObjectStreamStorage implements StreamStrategy {
+public class ObjectStreamStorage implements StreamSerializer {
 
 	@Override
 	public void doWrite(Resume r, OutputStream os) throws IOException {

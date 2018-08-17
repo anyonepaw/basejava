@@ -96,6 +96,6 @@ public class PathStorage extends AbstractStorage<Path> {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		return -1;
+		return 0;
 	}
 }

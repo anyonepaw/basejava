@@ -32,12 +32,12 @@ public class ResumeTest {
 
 
 		System.out.println(resume.getFullName());
-		for (EnumMap.Entry<ContactType, String> contact : resume.getContacts().entrySet())
+		for (Map.Entry<ContactType, String> contact : resume.getContacts().entrySet())
 			System.out.println(contact.getKey().getTitle() + ": " + contact.getValue());
 		System.out.println();
 
 
-		for (EnumMap.Entry<SectionType, Text> section : resume.getSections().entrySet()) {
+		for (Map.Entry<SectionType, Text> section : resume.getSections().entrySet()) {
 			System.out.println();
 			System.out.println(section.getKey().getTitle());
 			System.out.println(section.getValue().toString());

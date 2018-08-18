@@ -24,8 +24,8 @@ public abstract class AbstractStorageTest {
 	private static final String UUID3 = "uuid3";
 	private static final String DUMMY = "DUMMY";
 	private static final String FULL_NAME1 = "Григорий Кислин";
-	private static final String FULL_NAME2 = "Высилий Китовский";
-	private static final String FULL_NAME3 = "Игорь Селецкий";
+	private static final String FULL_NAME2 = "Василий Китовский";
+	private static final String FULL_NAME3 = "Name3";
 	private static final Resume R1;
 	private static final Resume R2;
 	private static final Resume R3;
@@ -40,12 +40,13 @@ public abstract class AbstractStorageTest {
 		R2 = new Resume(UUID2, FULL_NAME2);
 		R3 = new Resume(UUID3, FULL_NAME3);
 
-
 		R1.addContact(ContactType.TELEPHONE, "+7(921) 855-0482");
 		R1.addContact(ContactType.SKYPE, "grigory.kislin");
 		R1.addContact(ContactType.MAIL, "gkislin@yandex.ru");
-		R1.addSection(SectionType.PERSONAL, new PlainText("Objective1"));
-		R1.addSection(SectionType.OBJECTIVE, new PlainText("Personal data"));
+
+/*
+		  R1.addSection(SectionType.PERSONAL, new PlainText("Personal data"));
+		R1.addSection(SectionType.OBJECTIVE, new PlainText("Objective1"));
 		R1.addSection(SectionType.ACHIEVEMENT, new StringListText("Achievement11", "Achievement12", "Achievement13"));
 		R1.addSection(SectionType.QUALIFICATIONS, new StringListText("Java", "SQL", "JavaScript"));
 		R1.addSection(SectionType.EXPERIENCE, new OrganizationText(
@@ -59,11 +60,12 @@ public abstract class AbstractStorageTest {
 								new Organization.Job(1996, Month.JANUARY, 2000, Month.DECEMBER, "aspirant", null),
 								new Organization.Job(2001, Month.MARCH, 2005, Month.JANUARY, "student", "IT faculty")),
 						new Organization("Organization12", "http://Organization12.ru")));
-
+*/
 
 		R2.addContact(ContactType.SKYPE, "vasilisk");
 		R2.addContact(ContactType.MAIL, "vaskitovsky@gmail.com");
 		R2.addContact(ContactType.GITHUB, "https://github.com/kitovsky");
+/*
 		R2.addSection(SectionType.PERSONAL, new PlainText("Порядочность, ответственность, способность работать в команде"));
 		R2.addSection(SectionType.OBJECTIVE, new PlainText("Тимлид"));
 		R2.addSection(SectionType.ACHIEVEMENT, new StringListText("Более 20+ успешно проведенных проектов"));
@@ -78,23 +80,7 @@ public abstract class AbstractStorageTest {
 						new Organization("University", null,
 								new Organization.Job(1996, Month.JANUARY, 2000, Month.DECEMBER, "aspirant", null),
 								new Organization.Job(2001, Month.MARCH, 2005, Month.JANUARY, "student", "IT faculty"))));
-
-		R3.addContact(ContactType.TELEPHONE, "+7(916) 975-0455");
-		R3.addContact(ContactType.SKYPE, "skyworker");
-		R3.addContact(ContactType.MAIL, "seletsky5675@mail.ru");
-		R3.addContact(ContactType.STATCKOVERFLOW, "https://stackoverflow.com/users/profile/skyworker");
-
-		R3.addSection(SectionType.PERSONAL, new PlainText("Аналитический склад ума, упорство и умение работать в команде"));
-		R3.addSection(SectionType.OBJECTIVE, new PlainText("Java архитектор"));
-		R3.addSection(SectionType.ACHIEVEMENT, new StringListText("Более 50+ успешно проведенных проектов"));
-		R3.addSection(SectionType.QUALIFICATIONS, new StringListText("Java", "SQL", "JavaScript"));
-
-		R3.addSection(SectionType.EXPERIENCE, new OrganizationText(new Organization("IT Tech", "", new Organization.Job(2013, Month.NOVEMBER, 2015, Month.JULY, "Разработчик, Java)", ""),
-				new Organization.Job(2015, Month.SEPTEMBER, 2018, Month.JULY, "Архитектор, Java)", ""))));
-
-		R3.addSection(SectionType.EDUCATION, new OrganizationText(new Organization("Coursera", "",
-				new Organization.Job(2007, Month.DECEMBER, 2008, Month.MAY, "\"Algorithms and Data Structures", ""))));
-
+*/
 
 	}
 

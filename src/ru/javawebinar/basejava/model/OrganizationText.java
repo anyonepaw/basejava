@@ -47,4 +47,12 @@ public class OrganizationText extends Text {
 	public int hashCode() {
 		return orgList != null ? orgList.hashCode() : 0;
 	}
+
+	public List<Organization> getOrgList() {
+		return orgList;
+	}
+
+	public void setOrgList(List<Organization> orgList) {
+		this.orgList = orgList;
+	}
 }

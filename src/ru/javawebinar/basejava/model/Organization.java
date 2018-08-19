@@ -63,8 +63,16 @@ public class Organization implements Serializable {
 		return sb.toString();
 	}
 
+	public List<Job> getJobList() {
+		return jobList;
+	}
+
+	public Link getHomePage() {
+		return homePage;
+	}
+
 	@XmlAccessorType(XmlAccessType.FIELD)
-	public static class Job implements Serializable{
+	public static class Job implements Serializable {
 
 		@XmlJavaTypeAdapter(LocalDateAdapter.class)
 		private LocalDate fromDate;
@@ -113,9 +121,9 @@ public class Organization implements Serializable {
 		@Override
 		public String toString() {
 			DateTimeFormatter df = DateTimeFormatter.ofPattern("MM/YYYY");
-			return fromDate.format(df) +
-					" - " + toDate.format(df) +
-					":  " + title + '\n' +
+			return fromDate.format(df) + '\n' +
+					toDate.format(df) + '\n' +
+					title + '\n' +
 					description;
 		}
 
@@ -140,5 +148,13 @@ public class Organization implements Serializable {
 			result = 31 * result + (description != null ? description.hashCode() : 0);
 			return result;
 		}
+	}
+
+	public void setHomePage(Link homePage) {
+		this.homePage = homePage;
+	}
+
+	public void setJobList(List<Job> jobList) {
+		this.jobList = jobList;
 	}
 }

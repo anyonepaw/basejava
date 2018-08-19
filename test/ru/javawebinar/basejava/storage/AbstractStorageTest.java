@@ -40,48 +40,29 @@ public abstract class AbstractStorageTest {
 		R2 = new Resume(UUID2, FULL_NAME2);
 		R3 = new Resume(UUID3, FULL_NAME3);
 
-		R1.addContact(ContactType.TELEPHONE, "+7(921) 855-0482");
-		R1.addContact(ContactType.SKYPE, "grigory.kislin");
-		R1.addContact(ContactType.MAIL, "gkislin@yandex.ru");
-
-/*
-		  R1.addSection(SectionType.PERSONAL, new PlainText("Personal data"));
+		R1.addContact(ContactType.MAIL, "mail1@ya.ru");
+		R1.addContact(ContactType.TELEPHONE, "11111");
 		R1.addSection(SectionType.OBJECTIVE, new PlainText("Objective1"));
-		R1.addSection(SectionType.ACHIEVEMENT, new StringListText("Achievement11", "Achievement12", "Achievement13"));
+		R1.addSection(SectionType.PERSONAL, new PlainText("Personal data"));
+		R1.addSection(SectionType.ACHIEVEMENT, new StringListText("Achivment11", "Achivment12", "Achivment13"));
 		R1.addSection(SectionType.QUALIFICATIONS, new StringListText("Java", "SQL", "JavaScript"));
-		R1.addSection(SectionType.EXPERIENCE, new OrganizationText(
-				new Organization("Organization11", "http://Organization11.ru",
-						new Organization.Job(2005, Month.JANUARY, "position1", "content1"), //NOW
-						new Organization.Job(2001, Month.MARCH, 2005, Month.JANUARY, "position2", "content2"))
-		));
+		R1.addSection(SectionType.EXPERIENCE,
+				new OrganizationText(
+						new Organization("Organization11", "http://Organization11.ru",
+								new Organization.Job(2005, Month.JANUARY, "position1", "content1"),
+								new Organization.Job(2001, Month.MARCH, 2005, Month.JANUARY, "position2", "content2"))));
 		R1.addSection(SectionType.EDUCATION,
 				new OrganizationText(
 						new Organization("Institute", null,
 								new Organization.Job(1996, Month.JANUARY, 2000, Month.DECEMBER, "aspirant", null),
-								new Organization.Job(2001, Month.MARCH, 2005, Month.JANUARY, "student", "IT faculty")),
+								new Organization.Job(2001, Month.MARCH, 2005, Month.JANUARY, "student", "IT facultet")),
 						new Organization("Organization12", "http://Organization12.ru")));
-*/
-
-		R2.addContact(ContactType.SKYPE, "vasilisk");
-		R2.addContact(ContactType.MAIL, "vaskitovsky@gmail.com");
-		R2.addContact(ContactType.GITHUB, "https://github.com/kitovsky");
-/*
-		R2.addSection(SectionType.PERSONAL, new PlainText("Порядочность, ответственность, способность работать в команде"));
-		R2.addSection(SectionType.OBJECTIVE, new PlainText("Тимлид"));
-		R2.addSection(SectionType.ACHIEVEMENT, new StringListText("Более 20+ успешно проведенных проектов"));
-		R2.addSection(SectionType.QUALIFICATIONS, new StringListText("JEE ", "Tomcat", "Jetty", "WebLogic", " WSO2"));
-		R2.addSection(SectionType.EXPERIENCE, new OrganizationText(new Organization("Java Online Projects", "",
-				new Organization.Job(2005, Month.NOVEMBER, 2010, Month.JULY, "Разработчик, Java)", ""),
-				new Organization.Job(2010, Month.SEPTEMBER, 2018, Month.JULY, "Тимлид, Разработчик, Java)", "")),
-				new Organization("Coursera", "",
-						new Organization.Job(2007, Month.DECEMBER, 2008, Month.MAY, "\"Algorithms and Data Structures", ""))));
-		R2.addSection(SectionType.EDUCATION,
+		R2.addContact(ContactType.SKYPE, "skype2");
+		R2.addContact(ContactType.TELEPHONE, "22222");
+		R1.addSection(SectionType.EXPERIENCE,
 				new OrganizationText(
-						new Organization("University", null,
-								new Organization.Job(1996, Month.JANUARY, 2000, Month.DECEMBER, "aspirant", null),
-								new Organization.Job(2001, Month.MARCH, 2005, Month.JANUARY, "student", "IT faculty"))));
-*/
-
+						new Organization("Organization2", "http://Organization2.ru",
+								new Organization.Job(2015, Month.JANUARY, "position1", "content1"))));
 	}
 
 	@Before

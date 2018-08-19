@@ -74,7 +74,7 @@ public class DataStreamSerializer implements StreamSerializer {
 				}
 			}
 		} catch (IOException e) {
-			e.printStackTrace();
+			throw new StorageException("Object writing error", e);
 		}
 	}
 
@@ -85,29 +85,25 @@ public class DataStreamSerializer implements StreamSerializer {
 			List<Organization> orgList = new ArrayList<>();
 			for (int i = 0; i < sizeOfOrgList; i++) {
 				String title = dis.readUTF();
-				String link = isEmpty(dis.readUTF());
+				String link = isNull(dis.readUTF());
 				int sizeOfJobList = dis.readInt();
 				List<Organization.Job> jobList = new ArrayList<>();
 				for (int j = 0; j < sizeOfJobList; j++) {
 					jobList.add(new Organization.Job(
 							LocalDate.parse(dis.readUTF(), FORMATTER),
 							LocalDate.parse(dis.readUTF(), FORMATTER),
-							dis.readUTF(), isEmpty(dis.readUTF())));
+							dis.readUTF(), isNull(dis.readUTF())));
 				}
 				orgList.add(new Organization(new Link(title, link), jobList));
 			}
 			return new OrganizationText(orgList);
 		} catch (IOException e) {
-			throw new StorageException("");
+			throw new StorageException("Object reading error", e);
 		}
 	}
 
 	private String isNull(String f) {
-		return f == null ? "" : f;
-	}
-
-	private String isEmpty(String f) {
-		return f.equals("")? null : f;
+		return f == null ? "" : f.equals("")? null : f;
 	}
 
 	private void enumRead(Resume resume, int size, DataInputStream dis, Class clazz) {

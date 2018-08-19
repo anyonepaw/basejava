@@ -22,22 +22,13 @@ public class DataStreamSerializer implements StreamSerializer {
 			dos.writeUTF(resume.getUuid());
 			dos.writeUTF(resume.getFullName());
 			dos.writeInt(resume.getContacts().size());
-			resume.getContacts().forEach((key, value) -> {
-				try {
-					dos.writeUTF(key.name());
-					dos.writeUTF(value);
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-			});
+			for (Map.Entry<ContactType, String> entry : resume.getContacts().entrySet()){
+				dos.writeUTF(entry.getKey().name());
+				dos.writeUTF(entry.getValue());
+			}
 			for (Map.Entry<SectionType, Text> entry : resume.getSections().entrySet()) {
 				dos.writeUTF(entry.getKey().name());
-				Text text = entry.getValue();
-				if (text.getClass().equals(OrganizationText.class)) {
-					organizationTextWriter(text, dos);
-				} else {
-					dos.writeUTF(text.toString());
-				}
+				textWriter(entry.getValue(), dos);
 			}
 		}
 	}
@@ -46,32 +37,38 @@ public class DataStreamSerializer implements StreamSerializer {
 	public Resume doRead(InputStream is) throws IOException {
 		try (DataInputStream dis = new DataInputStream(is)) {
 			Resume resume = new Resume(dis.readUTF(), dis.readUTF());
-			int size = dis.readInt();
-			enumRead(resume, size, dis, ContactType.class);
-			enumRead(resume, size, dis, SectionType.class);
-			System.out.println(resume.toString());
+			for (int i = 0; i < dis.readInt(); i++) {
+				resume.addContact(ContactType.valueOf(dis.readUTF()), dis.readUTF());
+			}
+			resume.addSection(SectionType.valueOf(dis.readUTF()), new PlainText(dis.readUTF()));
+			resume.addSection(SectionType.valueOf(dis.readUTF()), new PlainText(dis.readUTF()));
+			resume.addSection(SectionType.valueOf(dis.readUTF()), new StringListText((dis.readUTF()).split("\n")));
+			resume.addSection(SectionType.valueOf(dis.readUTF()), new StringListText((dis.readUTF()).split("\n")));
+			resume.addSection(SectionType.valueOf(dis.readUTF()), organizationTextReader(dis));
+			resume.addSection(SectionType.valueOf(dis.readUTF()), organizationTextReader(dis));
 			return resume;
 		}
 	}
 
-
-	private void organizationTextWriter(Text text, DataOutputStream dos) {
+	private void textWriter(Text text, DataOutputStream dos) {
 		try {
-			List<Organization> orgList = ((OrganizationText) text).getOrgList();
-			dos.writeInt(orgList.size());
-			for (int i = 0; i < orgList.size(); i++) {
-				Organization org = orgList.get(i);
-
-				dos.writeUTF(org.getHomePage().getName());
-				dos.writeUTF(isNull(org.getHomePage().getUrl()));
-				dos.writeInt(org.getJobList().size());
-				for (int j = 0; j < org.getJobList().size(); j++) {
-					Organization.Job job = org.getJobList().get(j);
-					dos.writeUTF(job.getFromDate().format(FORMATTER));
-					dos.writeUTF(job.getToDate().format(FORMATTER));
-					dos.writeUTF(job.getTitle());
-					dos.writeUTF(isNull(job.getDescription()));
+			if (text.getClass().equals(OrganizationText.class)) {
+				List<Organization> orgList = ((OrganizationText) text).getOrgList();
+				dos.writeInt(orgList.size());
+				for (Organization org : orgList) {
+					dos.writeUTF(org.getHomePage().getName());
+					dos.writeUTF(isNull(org.getHomePage().getUrl()));
+					dos.writeInt(org.getJobList().size());
+					for (int j = 0; j < org.getJobList().size(); j++) {
+						Organization.Job job = org.getJobList().get(j);
+						dos.writeUTF(job.getFromDate().format(FORMATTER));
+						dos.writeUTF(job.getToDate().format(FORMATTER));
+						dos.writeUTF(job.getTitle());
+						dos.writeUTF(isNull(job.getDescription()));
+					}
 				}
+			} else {
+				dos.writeUTF(text.toString());
 			}
 		} catch (IOException e) {
 			throw new StorageException("Object writing error", e);
@@ -103,27 +100,7 @@ public class DataStreamSerializer implements StreamSerializer {
 	}
 
 	private String isNull(String f) {
-		return f == null ? "" : f.equals("")? null : f;
-	}
-
-	private void enumRead(Resume resume, int size, DataInputStream dis, Class clazz) {
-		try {
-			if (clazz.equals(ContactType.class)) {
-				for (int i = 0; i < size; i++) {
-					resume.addContact(ContactType.valueOf(dis.readUTF()), dis.readUTF());
-				}
-			}
-			if (clazz.equals(SectionType.class)) {
-				resume.addSection(SectionType.valueOf(dis.readUTF()), new PlainText(dis.readUTF()));
-				resume.addSection(SectionType.valueOf(dis.readUTF()), new PlainText(dis.readUTF()));
-				resume.addSection(SectionType.valueOf(dis.readUTF()), new StringListText((dis.readUTF()).split("\n")));
-				resume.addSection(SectionType.valueOf(dis.readUTF()), new StringListText((dis.readUTF()).split("\n")));
-				resume.addSection(SectionType.valueOf(dis.readUTF()), organizationTextReader(dis));
-				resume.addSection(SectionType.valueOf(dis.readUTF()), organizationTextReader(dis));
-			}
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		return f == null ? "" : f.equals("") ? null : f;
 	}
 
 }

@@ -55,12 +55,7 @@ public class Organization implements Serializable {
 
 	@Override
 	public String toString() {
-		StringBuilder sb = new StringBuilder();
-		sb.append(homePage.getName()).append("\n");
-		for (Job job : jobList) {
-			sb.append(job.toString()).append("\n");
-		}
-		return sb.toString();
+			return homePage.toString();
 	}
 
 	public List<Job> getJobList() {
@@ -121,9 +116,9 @@ public class Organization implements Serializable {
 		@Override
 		public String toString() {
 			DateTimeFormatter df = DateTimeFormatter.ofPattern("MM/YYYY");
-			return fromDate.format(df) + '\n' +
-					toDate.format(df) + '\n' +
-					title + '\n' +
+			return fromDate.format(df) + ' ' +
+					toDate.format(df) + ' ' +
+					title + ' ' +
 					description;
 		}
 

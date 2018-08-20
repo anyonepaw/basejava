@@ -76,7 +76,7 @@ public class DataStreamSerializer implements StreamSerializer {
 					dos.writeInt(jobList.size());
 					for (Organization.Job aJobList : jobList) {
 						dos.writeUTF(aJobList.getFromDate().format(FORMATTER));
-						dos.writeUTF(aJobList.getFromDate().format(FORMATTER));
+						dos.writeUTF(aJobList.getToDate().format(FORMATTER));
 						dos.writeUTF(aJobList.getTitle());
 						dos.writeUTF(isNull(aJobList.getDescription()));
 					}

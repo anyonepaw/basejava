@@ -26,7 +26,7 @@ public class DataStreamSerializer implements StreamSerializer {
 			for (Map.Entry<SectionType, Text> entry : resume.getSections().entrySet()) {
 				SectionType sectionType = entry.getKey();
 				dos.writeUTF(sectionType.name());
-				textWriter(sectionType, entry.getValue(), dos);
+				switchEnums(sectionType, "doWrite", resume, null, dos, entry.getValue());
 			}
 		}
 	}
@@ -42,74 +42,45 @@ public class DataStreamSerializer implements StreamSerializer {
 			int sectionSize = dis.readInt();
 			for (int i = 0; i < sectionSize; i++) {
 				SectionType sectionType = SectionType.valueOf(dis.readUTF());
-				switch (sectionType) {
-					case PERSONAL:
-					case OBJECTIVE:
-						resume.addSection(sectionType, new PlainText(dis.readUTF()));
-						break;
-					case ACHIEVEMENT:
-					case QUALIFICATIONS:
-						int stringListTextSize = dis.readInt();
-						if (stringListTextSize != 0) {
-							List<String> stringListText = new ArrayList<>();
-							for (int j = 0; j < stringListTextSize; j++) {
-								stringListText.add(dis.readUTF());
-							}
-							resume.addSection(sectionType, new StringListText(stringListText));
-						} else {
-							resume.addSection(sectionType, new StringListText(Collections.emptyList()));
-						}
-						break;
-					case EDUCATION:
-					case EXPERIENCE:
-						resume.addSection(sectionType, organizationTextReader(dis));
-						break;
-				}
+				switchEnums(sectionType, "doRead", resume, dis, null, null);
 			}
 			return resume;
 		}
 	}
 
-	private void textWriter(SectionType sectionType, Text text, DataOutputStream dos) throws IOException {
+
+	private void switchEnums(SectionType sectionType, String method, Resume resume,
+	                         DataInputStream dis, DataOutputStream dos, Text text) throws IOException {
 		switch (sectionType) {
 			case PERSONAL:
 			case OBJECTIVE:
-				dos.writeUTF(text.toString());
+				if (method.equals("doWrite")) {
+					dos.writeUTF(text.toString());
+				} else if (method.equals("doRead")) {
+					resume.addSection(sectionType, new PlainText(dis.readUTF()));
+				}
 				break;
 			case ACHIEVEMENT:
 			case QUALIFICATIONS:
-				List<String> stringListText = ((StringListText) text).getStringList();
-				if (stringListText != null) {
-					dos.writeInt(stringListText.size());
-					for (String line : stringListText) {
-						dos.writeUTF(line);
-					}
-				} else {
-					dos.writeInt(0);
+				if (method.equals("doWrite")) {
+					stringListTextWriter(dos, text);
+				} else if (method.equals("doRead")) {
+					stringListTextReader(sectionType, dis, resume);
 				}
 				break;
 			case EDUCATION:
 			case EXPERIENCE:
-				List<Organization> orgList = ((OrganizationText) text).getOrgList();
-				dos.writeInt(orgList.size());
-				for (Organization organization : orgList) {
-					dos.writeUTF(organization.getHomePage().getName());
-					dos.writeUTF(Objects.toString(organization.getHomePage().getUrl(), "null"));
-					List<Organization.Job> jobList = organization.getJobList();
-					dos.writeInt(jobList.size());
-					for (Organization.Job aJobList : jobList) {
-						dos.writeUTF(aJobList.getFromDate().format(FORMATTER));
-						dos.writeUTF(aJobList.getToDate().format(FORMATTER));
-						dos.writeUTF(aJobList.getTitle());
-						dos.writeUTF(Objects.toString(aJobList.getDescription(), "null"));
-					}
+				if (method.equals("doWrite")) {
+					organizationTextWriter(dos, text);
+				} else if (method.equals("doRead")) {
+					organizationTextReader(sectionType, dis, resume);
 				}
 				break;
 		}
 	}
 
 
-	private Text organizationTextReader(DataInputStream dis) throws IOException {
+	private void organizationTextReader(SectionType sectionType, DataInputStream dis, Resume resume) throws IOException {
 		int orgListSize = dis.readInt();
 		List<Organization> orgList = new ArrayList<>();
 		for (int i = 0; i < orgListSize; i++) {
@@ -130,8 +101,48 @@ public class DataStreamSerializer implements StreamSerializer {
 			}
 			orgList.add(new Organization(new Link(title, link), jobList));
 		}
-		return new OrganizationText(orgList);
+		resume.addSection(sectionType, new OrganizationText(orgList));
 	}
 
+	private void organizationTextWriter(DataOutputStream dos, Text text) throws IOException {
+		List<Organization> orgList = ((OrganizationText) text).getOrgList();
+		dos.writeInt(orgList.size());
+		for (Organization organization : orgList) {
+			dos.writeUTF(organization.getHomePage().getName());
+			dos.writeUTF(Objects.toString(organization.getHomePage().getUrl(), "null"));
+			List<Organization.Job> jobList = organization.getJobList();
+			dos.writeInt(jobList.size());
+			for (Organization.Job aJobList : jobList) {
+				dos.writeUTF(aJobList.getFromDate().format(FORMATTER));
+				dos.writeUTF(aJobList.getToDate().format(FORMATTER));
+				dos.writeUTF(aJobList.getTitle());
+				dos.writeUTF(Objects.toString(aJobList.getDescription(), "null"));
+			}
+		}
+	}
 
+	private void stringListTextReader(SectionType sectionType, DataInputStream dis, Resume resume) throws IOException{
+		int stringListTextSize = dis.readInt();
+		if (stringListTextSize != 0) {
+			List<String> stringListText = new ArrayList<>();
+			for (int j = 0; j < stringListTextSize; j++) {
+				stringListText.add(dis.readUTF());
+			}
+			resume.addSection(sectionType, new StringListText(stringListText));
+		} else {
+			resume.addSection(sectionType, new StringListText(Collections.emptyList()));
+		}
+	}
+
+	private void stringListTextWriter(DataOutputStream dos, Text text) throws IOException{
+		List<String> stringListText = ((StringListText) text).getStringList();
+		if (stringListText != null) {
+			dos.writeInt(stringListText.size());
+			for (String line : stringListText) {
+				dos.writeUTF(line);
+			}
+		} else {
+			dos.writeInt(0);
+		}
+	}
 }

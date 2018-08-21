@@ -49,15 +49,15 @@ public abstract class AbstractStorageTest {
 		R1.addSection(SectionType.EDUCATION,
 				new OrganizationText(
 						new Organization("Institute", "",
-								new Organization.Job(1996, Month.JANUARY, 2000, Month.DECEMBER, "aspirant", ""),
+								new Organization.Job(1996, Month.JANUARY, 2000, Month.DECEMBER, "aspirant", null),
 								new Organization.Job(2001, Month.MARCH, 2005, Month.JANUARY, "student", "IT faculty")),
 						new Organization("Organization12", "http://Organization12.ru")));
-//		R2.addContact(ContactType.SKYPE, "skype2");
-//		R2.addContact(ContactType.TELEPHONE, "22222");
-//		R1.addSection(SectionType.EXPERIENCE,
-//				new OrganizationText(
-//						new Organization("Organization2", "http://Organization2.ru",
-//								new Organization.Job(2015, Month.JANUARY, 2017, Month.JANUARY,"position1", "content1"))));
+		R2.addContact(ContactType.SKYPE, "skype2");
+		R2.addContact(ContactType.TELEPHONE, "22222");
+		R1.addSection(SectionType.EXPERIENCE,
+				new OrganizationText(
+						new Organization("Organization2", "http://Organization2.ru",
+								new Organization.Job(2015, Month.JANUARY, 2017, Month.JANUARY,"position1", "content1"))));
 	}
 
 	@Before

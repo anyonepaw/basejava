@@ -43,4 +43,8 @@ public class StringListText extends Text {
 	public int hashCode() {
 		return stringList != null ? stringList.hashCode() : 0;
 	}
+
+	public List<String> getStringList() {
+		return stringList;
+	}
 }

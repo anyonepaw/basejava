@@ -55,7 +55,7 @@ public class Organization implements Serializable {
 
 	@Override
 	public String toString() {
-			return homePage.toString();
+		return homePage.toString();
 	}
 
 	public List<Job> getJobList() {
@@ -86,7 +86,7 @@ public class Organization implements Serializable {
 			this.fromDate = fromDate;
 			this.toDate = toDate;
 			this.title = title;
-			this.description = description;
+			this.description = (description == null) ? "" : description;
 		}
 
 		public Job(int fromYear, Month fromMonth, String title, String description) {

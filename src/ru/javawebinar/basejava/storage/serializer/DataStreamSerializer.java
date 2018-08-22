@@ -18,16 +18,24 @@ public class DataStreamSerializer implements StreamSerializer {
 			dos.writeUTF(resume.getUuid());
 			dos.writeUTF(resume.getFullName());
 			dos.writeInt(resume.getContacts().size());
+
 			for (Map.Entry<ContactType, String> entry : resume.getContacts().entrySet()) {
-				dos.writeUTF(entry.getKey().name());
-				dos.writeUTF(entry.getValue());
+				writeString(dos, entry.getKey().name());
+				writeString(dos, entry.getValue());
 			}
 			dos.writeInt(resume.getSections().size());
 			for (Map.Entry<SectionType, Text> entry : resume.getSections().entrySet()) {
-				SectionType sectionType = entry.getKey();
-				dos.writeUTF(sectionType.name());
-				textWriter(sectionType, entry.getValue(), dos);
+				dos.writeUTF(entry.getKey().name());
+				textWriter(entry.getKey(), entry.getValue(), dos);
 			}
+		}
+	}
+
+	private void writeString(DataOutputStream dos, String s) {
+		try {
+			dos.writeUTF(s);
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 	}
 
@@ -50,15 +58,11 @@ public class DataStreamSerializer implements StreamSerializer {
 					case ACHIEVEMENT:
 					case QUALIFICATIONS:
 						int stringListTextSize = dis.readInt();
-						if (stringListTextSize != 0) {
-							List<String> stringListText = new ArrayList<>();
-							for (int j = 0; j < stringListTextSize; j++) {
-								stringListText.add(dis.readUTF());
-							}
-							resume.addSection(sectionType, new StringListText(stringListText));
-						} else {
-							resume.addSection(sectionType, new StringListText(Collections.emptyList()));
+						List<String> stringListText = new ArrayList<>();
+						for (int j = 0; j < stringListTextSize; j++) {
+							stringListText.add(dis.readUTF());
 						}
+						resume.addSection(sectionType, new StringListText(stringListText));
 						break;
 					case EDUCATION:
 					case EXPERIENCE:
@@ -79,13 +83,9 @@ public class DataStreamSerializer implements StreamSerializer {
 			case ACHIEVEMENT:
 			case QUALIFICATIONS:
 				List<String> stringListText = ((StringListText) text).getStringList();
-				if (stringListText != null) {
-					dos.writeInt(stringListText.size());
-					for (String line : stringListText) {
-						dos.writeUTF(line);
-					}
-				} else {
-					dos.writeInt(0);
+				dos.writeInt(stringListText.size());
+				for (String line : stringListText) {
+					dos.writeUTF(line);
 				}
 				break;
 			case EDUCATION:
@@ -94,20 +94,19 @@ public class DataStreamSerializer implements StreamSerializer {
 				dos.writeInt(orgList.size());
 				for (Organization organization : orgList) {
 					dos.writeUTF(organization.getHomePage().getName());
-					dos.writeUTF(Objects.toString(organization.getHomePage().getUrl(), "null"));
+					dos.writeUTF(organization.getHomePage().getUrl());
 					List<Organization.Job> jobList = organization.getJobList();
 					dos.writeInt(jobList.size());
 					for (Organization.Job aJobList : jobList) {
 						dos.writeUTF(aJobList.getFromDate().format(FORMATTER));
 						dos.writeUTF(aJobList.getToDate().format(FORMATTER));
 						dos.writeUTF(aJobList.getTitle());
-						dos.writeUTF(Objects.toString(aJobList.getDescription(), "null"));
+						dos.writeUTF(aJobList.getDescription());
 					}
 				}
 				break;
 		}
 	}
-
 
 	private Text organizationTextReader(DataInputStream dis) throws IOException {
 		int orgListSize = dis.readInt();
@@ -115,7 +114,6 @@ public class DataStreamSerializer implements StreamSerializer {
 		for (int i = 0; i < orgListSize; i++) {
 			String title = dis.readUTF();
 			String link = (dis.readUTF());
-			link = link.equals("null") ? null : link;
 			int sizeOfJobList = dis.readInt();
 			List<Organization.Job> jobList = new ArrayList<>();
 			for (int j = 0; j < sizeOfJobList; j++) {
@@ -126,12 +124,11 @@ public class DataStreamSerializer implements StreamSerializer {
 				jobList.add(new Organization.Job(
 						LocalDate.parse(date1, FORMATTER),
 						LocalDate.parse(date2, FORMATTER),
-						jobTitle, jobDesc.equals("null") ? null : jobDesc));
+						jobTitle, jobDesc));
 			}
 			orgList.add(new Organization(new Link(title, link), jobList));
 		}
 		return new OrganizationText(orgList);
 	}
-
 
 }

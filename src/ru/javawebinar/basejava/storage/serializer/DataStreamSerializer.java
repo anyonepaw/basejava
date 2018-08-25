@@ -18,24 +18,15 @@ public class DataStreamSerializer implements StreamSerializer {
 			dos.writeUTF(resume.getUuid());
 			dos.writeUTF(resume.getFullName());
 			dos.writeInt(resume.getContacts().size());
-
 			for (Map.Entry<ContactType, String> entry : resume.getContacts().entrySet()) {
-				writeString(dos, entry.getKey().name());
-				writeString(dos, entry.getValue());
+				dos.writeUTF(entry.getKey().name());
+				dos.writeUTF(entry.getValue());
 			}
 			dos.writeInt(resume.getSections().size());
 			for (Map.Entry<SectionType, Text> entry : resume.getSections().entrySet()) {
 				dos.writeUTF(entry.getKey().name());
 				textWriter(entry.getKey(), entry.getValue(), dos);
 			}
-		}
-	}
-
-	private void writeString(DataOutputStream dos, String s) {
-		try {
-			dos.writeUTF(s);
-		} catch (IOException e) {
-			e.printStackTrace();
 		}
 	}
 
@@ -130,5 +121,4 @@ public class DataStreamSerializer implements StreamSerializer {
 		}
 		return new OrganizationText(orgList);
 	}
-
 }

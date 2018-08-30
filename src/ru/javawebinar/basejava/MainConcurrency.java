@@ -1,40 +1,49 @@
 package ru.javawebinar.basejava;
 
 
-
 public class MainConcurrency {
-	private static final int THREADS_NUMBER = 10000;
-	private static int counter;
-	private static final Object LOCK = new Object();
+
+	private String name;
+
+	public String getName() {
+		return name;
+	}
+
+	public MainConcurrency(String name) {
+		this.name = name;
+	}
+
+	public static void main(String[] args) {
+
+		final MainConcurrency classObject1 = new MainConcurrency("classObject1");
+		final MainConcurrency classObject2 = new MainConcurrency("classObject2");
 
 
-	public static void main(String[] args) throws InterruptedException {
-		final MainConcurrency mainConcurrency = new MainConcurrency();
+		new Thread(() -> {
+			classObject1.interactWithOther(classObject2);
+		}).start();
 
-		Thread thread0 = new Thread(mainConcurrency::div);
-		thread0.start();
-
-
-		Thread thread1 = new Thread(mainConcurrency::inc);
-		thread1.start();
+		new Thread(() -> {
+			classObject2.interactWithOther(classObject1);
+		}).start();
 
 	}
 
 
-	private void div() {
-
+	private void interactWithOther(MainConcurrency mainConcurrency) {
 		synchronized (this) {
-			counter = 1 / 16;
-			inc();
+			System.out.println(this.name + " interactWithOther " + mainConcurrency.getName());
+			double b = Math.atan2(6,7);
+			mainConcurrency.doSmthBack(this);
 		}
 
 	}
 
-	private void inc() {
-
+	private void doSmthBack(MainConcurrency mainConcurrency) {
 		synchronized (this) {
-			counter++;
-			div();
+			System.out.println(this.name + " doSmthBack " + mainConcurrency.getName());
 		}
 	}
+
+
 }

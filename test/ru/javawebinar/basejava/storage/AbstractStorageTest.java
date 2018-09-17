@@ -7,15 +7,15 @@ import org.junit.Test;
 import ru.javawebinar.basejava.exception.ExistStorageException;
 import ru.javawebinar.basejava.exception.NotExistStorageException;
 import ru.javawebinar.basejava.model.*;
+import ru.javawebinar.basejava.Config;
 
 import java.io.File;
-import java.time.Month;
 import java.util.*;
 
 
 public abstract class AbstractStorageTest {
 
-	protected static final File STORAGE_DIR = new File("/Users/Angelika/Documents/Projects/basejava/src/ru/javawebinar/basejava/storage/resumes");
+	protected static final File STORAGE_DIR = Config.get().getStorageDir();
 	protected Storage storage;
 
 
@@ -39,6 +39,8 @@ public abstract class AbstractStorageTest {
 		R1 = new Resume(UUID1, FULL_NAME1);
 		R2 = new Resume(UUID2, FULL_NAME2);
 		R3 = new Resume(UUID3, FULL_NAME3);
+
+/*
 		R1.addContact(ContactType.MAIL, "mail1@ya.ru");
 		R1.addContact(ContactType.TELEPHONE, "11111");
 		R1.addSection(SectionType.OBJECTIVE, new PlainText("Objective1"));
@@ -58,7 +60,7 @@ public abstract class AbstractStorageTest {
 				new OrganizationText(
 						new Organization("Organization2", "http://Organization2.ru",
 								new Organization.Job(2015, Month.JANUARY, 2017, Month.JANUARY,"position1", "content1"))));
-	}
+	*/}
 
 	@Before
 	public void setUp() {

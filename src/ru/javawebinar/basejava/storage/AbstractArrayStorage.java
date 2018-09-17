@@ -25,12 +25,12 @@ public abstract class AbstractArrayStorage extends AbstractStorage<Integer> {
 		if (size == STORAGE_LIMIT) {
 			throw new StorageException("Storage is full.", resume.getUuid());
 		}
-		insert(resume, (int) index);
+		insert(resume, index);
 		size++;
 	}
 
 	public final void doDelete(Integer index) {
-		fillDeletedElement((int) index);
+		fillDeletedElement(index);
 		storage[--size] = null;
 	}
 

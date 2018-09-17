@@ -15,35 +15,44 @@ public class MainConcurrency {
 
 	public static void main(String[] args) {
 
-		final MainConcurrency classObject1 = new MainConcurrency("classObject1");
-		final MainConcurrency classObject2 = new MainConcurrency("classObject2");
+		final String lock1 = "lock1";
+		final String lock2 = "lock2";
 
-
-		new Thread(() -> {
-			classObject1.interactWithOther(classObject2);
-		}).start();
-
-		new Thread(() -> {
-			classObject2.interactWithOther(classObject1);
-		}).start();
+		deadlock(lock1, lock2);
+		deadlock(lock2, lock1);
 
 	}
 
+	private static void deadlock(Object lock1, Object lock2){
+			new Thread(() -> {
+				System.out.println("Waiting " + lock1);
+				synchronized (lock1) {
+					System.out.println("Holding " + lock1);
+					try {
+						Thread.sleep(50);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+					System.out.println("Waiting " + lock2);
+					synchronized (lock2) {
+						System.out.println("Holding " + lock2);
+					}
+				}
 
-	private void interactWithOther(MainConcurrency mainConcurrency) {
-		synchronized (this) {
-			System.out.println(this.name + " interactWithOther " + mainConcurrency.getName());
-			double b = Math.atan2(6,7);
-			mainConcurrency.doSmthBack(this);
+			}).start();
 		}
 
-	}
 
-	private void doSmthBack(MainConcurrency mainConcurrency) {
-		synchronized (this) {
-			System.out.println(this.name + " doSmthBack " + mainConcurrency.getName());
-		}
-	}
+//
+//	private void interactWithOther(MainConcurrency mainConcurrency) {
+//		synchronized (this) {
+//			synchronized (this) {
+//				System.out.println(this.name + " doSmthBack " + mainConcurrency.getName());
+//			}
+//		}
+//
+//	}
+
 
 
 }

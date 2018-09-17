@@ -5,18 +5,22 @@ public class PlainText extends Text {
 
 	private static final long serialVersionUID = 1L;
 
-	private String plainText;
+	private String content;
 
 	public PlainText() {
 	}
 
-	public PlainText(String plainText) {
-		this.plainText = plainText;
+	public PlainText(String content) {
+		this.content = content;
 	}
 
 	@Override
 	public String toString() {
-		return plainText;
+		return content;
+	}
+
+	public String getContent(){
+		return content;
 	}
 
 	@Override
@@ -26,11 +30,11 @@ public class PlainText extends Text {
 
 		PlainText plainText1 = (PlainText) o;
 
-		return plainText != null ? plainText.equals(plainText1.plainText) : plainText1.plainText == null;
+		return content != null ? content.equals(plainText1.content) : plainText1.content == null;
 	}
 
 	@Override
 	public int hashCode() {
-		return plainText != null ? plainText.hashCode() : 0;
+		return content != null ? content.hashCode() : 0;
 	}
 }

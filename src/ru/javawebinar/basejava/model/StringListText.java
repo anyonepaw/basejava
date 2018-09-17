@@ -10,23 +10,23 @@ public class StringListText extends Text {
 
 	private static final long serialVersionUID = 1L;
 
-	private List<String> stringList;
+	private List<String> items;
 
-	public StringListText(String...items) {
+	public StringListText(String... items) {
 		this(Arrays.asList(items));
 	}
 
 	public StringListText() {
 	}
 
-	public StringListText(List<String> stringList) {
-		Objects.requireNonNull(stringList, "list must not be null");
-		this.stringList = stringList;
+	public StringListText(List<String> items) {
+		Objects.requireNonNull(items, "list must not be null");
+		this.items = items;
 	}
 
 	@Override
 	public String toString() {
-		return String.join("\n", stringList);
+		return String.join("\n", items);
 	}
 
 	@Override
@@ -36,15 +36,15 @@ public class StringListText extends Text {
 
 		StringListText that = (StringListText) o;
 
-		return stringList != null ? stringList.equals(that.stringList) : that.stringList == null;
+		return items != null ? items.equals(that.items) : that.items == null;
 	}
 
 	@Override
 	public int hashCode() {
-		return stringList != null ? stringList.hashCode() : 0;
+		return items != null ? items.hashCode() : 0;
 	}
 
-	public List<String> getStringList() {
-		return stringList;
+	public List<String> getItems() {
+		return items;
 	}
 }

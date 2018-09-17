@@ -33,6 +33,7 @@ public class OrganizationText extends Text {
 		return String.join("", list);
 	}
 
+
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;

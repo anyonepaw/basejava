@@ -2,7 +2,7 @@
 # Одиннадцатое занятие
 
 ## Многопоточность. Параллельное выполнение.
-![Закон Мура](https://www.karlrupp.net/wp-content/uploads/2015/06/40-years-processor-trend.png)
+![Закон Мура](https://www.karlrupp.net/wp-items/uploads/2015/06/40-years-processor-trend.png)
 - <a href="https://ru.wikipedia.org/wiki/Закон_Мура">Закон Мура</a>
 - <a href="https://ru.wikipedia.org/wiki/Закон_Амдала">Закон Амдала</a>
 

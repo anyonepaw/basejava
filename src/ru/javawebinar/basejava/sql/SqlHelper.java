@@ -1,8 +1,7 @@
 package ru.javawebinar.basejava.sql;
 
-
+import ru.javawebinar.basejava.exception.ExistStorageException;
 import ru.javawebinar.basejava.exception.StorageException;
-
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -29,7 +28,11 @@ public class SqlHelper {
 				     ResultSet.CONCUR_UPDATABLE)) {
 			return sqlStrategy.perform(ps);
 		} catch (SQLException e) {
-			throw new StorageException(e.getSQLState());
+			if(e.getSQLState().equals("23505")) {
+				throw new ExistStorageException(e.getMessage() + e.getSQLState());
+			} else {
+				throw new StorageException(e.getSQLState());
+			}
 		}
 	}
 

@@ -93,13 +93,12 @@ public class SqlStorage implements Storage {
 			Map<String, Resume> sortedResumesMap = new LinkedHashMap<>();
 			while (rs.next()) {
 				String uuid = rs.getString("uuid");
-				sortedResumesMap.putIfAbsent(uuid, new Resume(uuid, rs.getString("full_name")));
-				Resume resume = sortedResumesMap.get(uuid);
+				String full_name = rs.getString("full_name");
+				Resume resume = sortedResumesMap.computeIfAbsent(uuid, v -> new Resume(uuid, full_name));
 				addingContact(resume, rs);
 			}
 			return new ArrayList<>(sortedResumesMap.values());
 		});
-
 
 
 	}

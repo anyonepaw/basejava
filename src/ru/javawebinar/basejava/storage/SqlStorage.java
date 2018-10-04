@@ -32,7 +32,7 @@ public class SqlStorage implements Storage {
 				}
 			}
 			try (PreparedStatement ps = conn.prepareStatement("DELETE FROM contact WHERE resume_uuid = ?")) {
-				ps.setString(1, resume.getUuid());
+				setStrings(ps, resume.getUuid());
 				ps.execute();
 			}
 			gettingContacts(resume, conn);
@@ -59,7 +59,7 @@ public class SqlStorage implements Storage {
 						"                      ON r.uuid = c.resume_uuid" +
 						"                      WHERE r.uuid = ?",
 				ps -> {
-					ps.setString(1, uuid);
+					setStrings(ps, uuid);
 					ResultSet rs = ps.executeQuery();
 					if (!rs.next()) {
 						throw new NotExistStorageException(uuid);
@@ -99,6 +99,9 @@ public class SqlStorage implements Storage {
 			}
 			return new ArrayList<>(sortedResumesMap.values());
 		});
+
+
+
 	}
 
 	@Override
@@ -113,8 +116,7 @@ public class SqlStorage implements Storage {
 
 
 	private void setStrings(PreparedStatement ps, String... arg) throws SQLException {
-		int index = arg.length;
-		ps.setString(index, arg[index - 1]);
+		ps.setString(arg.length, arg[arg.length - 1]);
 		if (arg.length == 1) {
 			return;
 		} else {

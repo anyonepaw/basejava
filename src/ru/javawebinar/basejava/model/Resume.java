@@ -1,5 +1,7 @@
 package ru.javawebinar.basejava.model;
 
+import javafx.print.PageLayout;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -14,6 +16,17 @@ import java.util.*;
 public class Resume implements Comparable<Resume>, Serializable {
 
 	private static final long serialVersionUID = 1L;
+
+	public static final Resume EMPTY = new Resume();
+
+	static {
+		EMPTY.setSection(SectionType.PERSONAL, PlainText.EMPTY);
+		EMPTY.setSection(SectionType.OBJECTIVE, PlainText.EMPTY);
+		EMPTY.setSection(SectionType.ACHIEVEMENT, StringListText.EMPTY);
+		EMPTY.setSection(SectionType.QUALIFICATIONS, StringListText.EMPTY);
+		EMPTY.setSection(SectionType.EDUCATION, new OrganizationText(Organization.EMPTY));
+		EMPTY.setSection(SectionType.EXPERIENCE, new OrganizationText(Organization.EMPTY));
+	}
 
 	// Unique identifier
 	private String uuid;
@@ -52,6 +65,15 @@ public class Resume implements Comparable<Resume>, Serializable {
 				Objects.equals(sections, resume.sections);
 	}
 
+
+	public void setUuid(String uuid) {
+		this.uuid = uuid;
+	}
+
+	public void setFullName(String fullName) {
+		this.fullName = fullName;
+	}
+
 	@Override
 	public int hashCode() {
 		return Objects.hash(uuid, fullName, contacts, sections);
@@ -81,11 +103,13 @@ public class Resume implements Comparable<Resume>, Serializable {
 		return sections.get(type);
 	}
 
-	public void addContact(ContactType type, String value) {
+
+
+	public void setContact(ContactType type, String value) {
 		contacts.put(type, value);
 	}
 
-	public void addSection(SectionType type, Text text) {
+	public void setSection(SectionType type, Text text) {
 		sections.put(type, text);
 	}
 

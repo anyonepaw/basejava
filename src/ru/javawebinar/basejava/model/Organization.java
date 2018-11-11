@@ -20,6 +20,8 @@ public class Organization implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
+	public static final Organization EMPTY = new Organization("", "", Job.EMPTY);
+
 	private Link homePage;
 	private List<Job> jobList;
 
@@ -75,6 +77,8 @@ public class Organization implements Serializable {
 		private LocalDate toDate;
 		private String title;
 		private String description;
+
+		public static final Job EMPTY = new Job();
 
 		public Job() {
 		}

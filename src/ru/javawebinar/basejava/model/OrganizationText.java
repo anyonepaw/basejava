@@ -11,6 +11,8 @@ public class OrganizationText extends Text {
 
 	private static final long serialVersionUID = 1L;
 
+
+
 	private List<Organization> orgList;
 
 	public OrganizationText() {

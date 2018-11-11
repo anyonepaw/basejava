@@ -5,6 +5,8 @@ public class PlainText extends Text {
 
 	private static final long serialVersionUID = 1L;
 
+	public static final PlainText EMPTY = new PlainText("");
+
 	private String content;
 
 	public PlainText() {
